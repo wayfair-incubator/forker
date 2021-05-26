@@ -1,6 +1,6 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'forker'
+description: 'Github action for automating fork creation'
+author: 'lelia'
 inputs:
   milliseconds: # change this
     required: true
