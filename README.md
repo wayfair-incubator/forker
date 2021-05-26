@@ -1,8 +1,6 @@
-<p align="center">
-  <a href="https://github.com/actions/typescript-action/actions"><img alt="typescript-action status" src="https://github.com/actions/typescript-action/workflows/build-test/badge.svg"></a>
-</p>
-
 # ⑂ forker
+
+[![Tests](https://github.com/lelia/forker/actions/workflows/test.yml/badge.svg)](https://github.com/lelia/forker/actions/workflows/test.yml)
 
 Github action to automate fork creation. This action uses [octokit.js](https://github.com/octokit/octokit.js) and the [GitHub API](https://docs.github.com/en/rest) to automatically create a repository fork, either in your personal namespace or an organization you administer. 
 
