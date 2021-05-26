@@ -2,6 +2,21 @@ name: 'forker'
 description: 'Github action for automating fork creation'
 author: 'lelia'
 inputs:
+  github_repo:
+    required: true
+    description: 'Github repository being forked'
+  github_user:
+    required: true
+    description: 'Github user requesting the fork'
+  github_org:
+    required: false
+    description: 'Github organization to fork the repository into'
+  add_user:
+    required: false
+    description: 'Add Github user to organization if missing'
+  license_whitelist:
+    required: false
+    description: 'Array of allowed licenses for repository being forked'
   milliseconds: # change this
     required: true
     description: 'input description here'
