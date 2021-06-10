@@ -2,15 +2,17 @@
 
 [![tests](https://github.com/lelia/forker/actions/workflows/test.yml/badge.svg)](https://github.com/lelia/forker/actions/workflows/test.yml)
 
-Github action to automate fork creation. This action uses [octokit.js](https://github.com/octokit/octokit.js) and the [GitHub API](https://docs.github.com/en/rest) to automatically create a repository fork, either in your personal namespace or an organization you administer. 
+Github action to automate fork creation. This action uses [octokit.js](https://github.com/octokit/octokit.js) and the [GitHub API](https://docs.github.com/en/rest) to automatically create a repository fork, either in your personal namespace or an organization you administer.
 
-Before forking a repository into an organization, `forker` will check membership and outside collaborator status for the user requesting the fork. When the `add_user` option is enabled, `forker` will automatically invite the specified `github_user` to become a member of the organization where the fork has been requested. Note that the invitation will be sent from whichever account is used to authenticate the Github action and fork the requested repository, meaning there must be sufficient permissions to invite outside users to the organization.
+Before forking a repository into an organization, `forker` will check membership and outside collaborator status for the user requesting the fork. When the `addUser` option is enabled, `forker` will automatically invite the specified `user` to become a member of the organization where the fork has been requested.
 
-For legal and compliance reasons, organizations or individuals can choose to provide an optional `license_whitelist` to compare against the [license of the repository](https://docs.github.com/en/rest/reference/licenses) being forked. If the license key returned by the Github API is not found within the provided whitelist, `forker` will exit without forking the repository.
+⚠️ Note that the invitation will be sent from whichever account is used to authenticate the Github action and fork the requested repository, meaning there must be sufficient permissions to invite outside users to the organization.
+
+For legal and compliance reasons, organizations or individuals can choose to provide an optional `licenseWhitelist` to compare against the [license of the repository](https://docs.github.com/en/rest/reference/licenses) being forked. If the license key returned by the Github API is not found within the provided whitelist, `forker` will exit without forking the repository.
 
 ----
 
-Use this template to bootstrap the creation of a TypeScript action.:rocket:
+Use this template to bootstrap the creation of a TypeScript action. :rocket:
 
 This template includes compilation support, tests, a validation workflow, publishing, and versioning guidance.  
 
