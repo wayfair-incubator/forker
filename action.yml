@@ -1,26 +1,32 @@
 name: 'forker'
-description: 'Github action for automating fork creation'
 author: 'lelia'
+branding:
+  icon: 'git-branch'
+  color: 'green'
+description: 'Github action for automating fork creation'
 inputs:
-  github_repo:
+  token:
+    description: 'Github API token'
     required: true
+  owner:
+    description: 'Owner of Github repository being forked'
+    required: true
+  repo:
     description: 'Github repository being forked'
-  github_user:
     required: true
-    description: 'Github user requesting the fork'
-  github_org:
-    required: false
+  org:
     description: 'Github organization to fork the repository into'
-  add_user:
     required: false
+  user:
+    description: 'Github user requesting the fork'
+    required: false
+  addUser:
     description: 'Add Github user to organization if missing'
-  license_whitelist:
     required: false
-    description: 'Array of allowed licenses for repository being forked'
-  milliseconds: # change this
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    default: false
+  licenseWhitelist:
+    description: 'List of allowed licenses for repository being forked'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
