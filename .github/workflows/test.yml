@@ -35,3 +35,4 @@ jobs:
           token: ${ secrets.GH_API_TOKEN }
           repo: tremor-runtime
           owner: tremor-rs
+          user: lelia
