@@ -23,15 +23,13 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          # token: ${TOKEN_HERE}
+          milliseconds: 2000
 
   integration: # make sure the action works with user-supplied params
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # - uses: ./.github/actions/forker
       - uses: ./
         with:
           repo: tremor-runtime
           owner: tremor-rs
-          # token: ${TOKEN_HERE}
