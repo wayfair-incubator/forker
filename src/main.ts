@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-const {Octokit} = require('@octokit/rest')
+import {Octokit} from '@octokit/rest'
 const token = core.getInput('token', {required: true})
 const octokit = new Octokit({auth: token})
 
@@ -58,14 +58,15 @@ async function run(): Promise<void> {
   }
 }
 
-async function getOrgMembership(org: string, user: string) {
+async function getOrgMembership(org: string, user: string): Promise<string> {
   let data
   try {
     data = await octokit.request('GET /orgs/{org}/members/{username}', {
       org,
       username: user
     })
-    if (data.status == 204) {
+    // @ts-expect-error only return membership URL if response code is 204
+    if (data.status === 204) {
       return data.url
     } else {
       core.setFailed(
@@ -74,9 +75,9 @@ async function getOrgMembership(org: string, user: string) {
       return ''
     }
   } catch (err) {
-    if (err.status == 404) {
+    if (err.status === 404) {
       core.debug(`User ${user} not found in ${org} organization`)
-    } else if (err.status == 302) {
+    } else if (err.status === 302) {
       core.setFailed(
         `🚨 Requester not a member of organization: ${err.message}`
       )
@@ -89,13 +90,17 @@ async function getOrgMembership(org: string, user: string) {
   }
 }
 
-async function getRepoLicense(owner: string, repo: string) {
+async function getRepoLicense(owner: string, repo: string): Promise<string> {
   try {
     const {data} = await octokit.request('GET /repos/{owner}/{repo}/license', {
       owner,
       repo
     })
-    return data.license.key
+    if (data !== null && data.license !== null) {
+      return data.license.key
+    } else {
+      return ''
+    }
   } catch (err) {
     core.setFailed(
       `🚨 Failed to retrieve license for repository: ${err.message}`
@@ -104,7 +109,7 @@ async function getRepoLicense(owner: string, repo: string) {
   }
 }
 
-async function getUserId(user: string) {
+async function getUserId(user: string): Promise<string> {
   try {
     const {data} = await octokit.request('GET /users/{username}', {
       username: user
@@ -116,8 +121,9 @@ async function getUserId(user: string) {
   }
 }
 
-async function inviteMember(org: string, user: string) {
-  const userId = await getUserId(user)
+async function inviteMember(org: string, user: string): Promise<void> {
+  const id = await getUserId(user)
+  const userId = Number.parseInt(id)
   core.debug(`Got user ID: ${userId}`)
   let data
   try {
@@ -125,7 +131,7 @@ async function inviteMember(org: string, user: string) {
       org,
       invitee_id: userId
     })
-    if (data.status == 201) {
+    if (data.status === 201) {
       core.debug(`User successfully invited`)
     } else {
       core.debug(`Unable to validate invitation`)
@@ -136,7 +142,7 @@ async function inviteMember(org: string, user: string) {
   }
 }
 
-async function isOrgMember(org: string, user: string) {
+async function isOrgMember(org: string, user: string): Promise<boolean> {
   const orgMembership = await getOrgMembership(org, user)
   core.debug(`Got org membership: ${orgMembership}`)
   return orgMembership ? true : false
@@ -146,7 +152,7 @@ async function isValidLicense(
   owner: string,
   repo: string,
   whitelist: string[]
-) {
+): Promise<boolean> {
   const repoLicense = await getRepoLicense(owner, repo)
   core.debug(`Got license: ${repoLicense}`)
   return whitelist.includes(repoLicense)
