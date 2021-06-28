@@ -23,6 +23,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
+          token: ${ secrets.GH_API_TOKEN }
           addUser: true
 
   integration: # make sure the action works with user-supplied params
@@ -31,5 +32,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
+          token: ${ secrets.GH_API_TOKEN }
           repo: tremor-runtime
           owner: tremor-rs
