@@ -29,7 +29,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/forker
+      # - uses: ./.github/actions/forker
+      - uses: ./
         with:
           repo: tremor-runtime
           owner: tremor-rs
