@@ -30,9 +30,9 @@ async function run(): Promise<void> {
 
     // Fork the specified repo into user namespace, unless an organization is specified
     core.info(`⑂ Creating fork of repository ${repo}...`)
-    let {data} = await octokit.request('POST /repos/{owner}/{repo}/forks', {
-      owner: owner,
-      repo: repo,
+    const {data} = await octokit.request('POST /repos/{owner}/{repo}/forks', {
+      owner,
+      repo,
       organization: org ? org : ''
     })
     core.info(`🎉 Forked repository now available at: ${data.html_url}`)
@@ -62,7 +62,7 @@ async function getOrgMembership(org: string, user: string) {
   let data
   try {
     data = await octokit.request('GET /orgs/{org}/members/{username}', {
-      org: org,
+      org,
       username: user
     })
     if (data.status == 204) {
@@ -91,9 +91,9 @@ async function getOrgMembership(org: string, user: string) {
 
 async function getRepoLicense(owner: string, repo: string) {
   try {
-    let {data} = await octokit.request('GET /repos/{owner}/{repo}/license', {
-      owner: owner,
-      repo: repo
+    const {data} = await octokit.request('GET /repos/{owner}/{repo}/license', {
+      owner,
+      repo
     })
     return data.license.key
   } catch (err) {
@@ -106,7 +106,7 @@ async function getRepoLicense(owner: string, repo: string) {
 
 async function getUserId(user: string) {
   try {
-    let {data} = await octokit.request('GET /users/{username}', {
+    const {data} = await octokit.request('GET /users/{username}', {
       username: user
     })
     return data.id
@@ -117,12 +117,12 @@ async function getUserId(user: string) {
 }
 
 async function inviteMember(org: string, user: string) {
-  let userId = await getUserId(user)
+  const userId = await getUserId(user)
   core.debug(`Got user ID: ${userId}`)
   let data
   try {
     data = await octokit.request('POST /orgs/{org}/invitations', {
-      org: org,
+      org,
       invitee_id: userId
     })
     if (data.status == 201) {
@@ -137,7 +137,7 @@ async function inviteMember(org: string, user: string) {
 }
 
 async function isOrgMember(org: string, user: string) {
-  let orgMembership = await getOrgMembership(org, user)
+  const orgMembership = await getOrgMembership(org, user)
   core.debug(`Got org membership: ${orgMembership}`)
   return orgMembership ? true : false
 }
@@ -147,7 +147,7 @@ async function isValidLicense(
   repo: string,
   whitelist: string[]
 ) {
-  let repoLicense = await getRepoLicense(owner, repo)
+  const repoLicense = await getRepoLicense(owner, repo)
   core.debug(`Got license: ${repoLicense}`)
   return whitelist.includes(repoLicense)
 }
