@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          milliseconds: 2000
+          addUser: true
 
   integration: # make sure the action works with user-supplied params
     runs-on: ubuntu-latest
