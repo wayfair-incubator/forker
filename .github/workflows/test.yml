@@ -17,11 +17,25 @@ jobs:
       - run: |
           npm run all
 
-  test: # make sure the action can fork to personal namespaces
+  # test: # make sure the action can fork to personal namespaces
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: ./
+  #       with:
+  #         path: ./
+  #         token: ${{ secrets.GH_API_TOKEN }}
+  #         ref: ${{ github.event.pull_request.head.sha }}
+  #         repo: tremor-runtime
+  #         owner: tremor-rs
+  #         user: lelia
+
+  test: # make sure the action can fork into organizations
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: ./
+        name: ":rocket: test user workflow"
         with:
           path: ./
           token: ${{ secrets.GH_API_TOKEN }}
@@ -29,12 +43,8 @@ jobs:
           repo: tremor-runtime
           owner: tremor-rs
           user: lelia
-
-  integration: # make sure the action can fork into organizations
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
       - uses: ./
+        name: ":octocat: test organization workflow"
         with:
           path: ./
           token: ${{ secrets.GH_API_TOKEN }}
