@@ -24,7 +24,7 @@ jobs:
       - uses: ./
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-          token: ${ secrets.GH_API_TOKEN }
+          token: ${{ secrets.GH_API_TOKEN }}
           addUser: true
 
   integration: # make sure the action works with user-supplied params
@@ -34,7 +34,7 @@ jobs:
       - uses: ./
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-          token: ${ secrets.GH_API_TOKEN }
+          token: ${{ secrets.GH_API_TOKEN }}
           repo: tremor-runtime
           owner: tremor-rs
           user: lelia
