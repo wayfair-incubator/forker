@@ -40,8 +40,8 @@ jobs:
           token: ${{ secrets.GH_API_TOKEN }}
           ref: ${{ github.event.pull_request.head.sha }}
           licenseWhitelist: "0bsd\napache-2.0\nmit"
-          repo: tremor-runtime
-          owner: tremor-rs
+          repo: backstage-plugin-buildkite
+          owner: RoadieHQ
           org: wayfair-contribs
           user: lelia
           addUser: true
