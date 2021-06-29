@@ -47,13 +47,11 @@ function run() {
         const org = core.getInput('org', { required: false });
         const user = core.getInput('user', { required: false });
         const addUser = core.getBooleanInput('addUser', { required: false });
-        const licenseWhitelist = core.getMultilineInput('licenseWhitelist', {
-            required: false
-        });
+        const licenseWhitelist = core.getMultilineInput('licenseWhitelist', { required: false }) || undefined;
         try {
             // Optionally enforce a whitelist of allowed repository licenses for forking
             core.info(`Value of license whitelist: ${licenseWhitelist}`);
-            if (licenseWhitelist && typeof licenseWhitelist !== 'undefined') {
+            if (licenseWhitelist !== undefined) {
                 core.info(`🚨🚨🚨🚨🚨 LICENSE CHECK 🚨🚨🚨🚨🚨`);
                 core.info(`⚖️ Checking repository license for ${repo} against provided whitelist...`);
                 if (yield isValidLicense(owner, repo, licenseWhitelist)) {
