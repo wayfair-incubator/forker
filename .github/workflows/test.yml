@@ -17,24 +17,24 @@ jobs:
       - run: |
           npm run all
 
-  test: # make sure the action works on a clean machine without building
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ./
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          token: ${{ secrets.GH_API_TOKEN }}
-          addUser: true
+  # test: # make sure the action works on a clean machine without building
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: ./
+  #       with:
+  #         ref: ${{ github.event.pull_request.head.sha }}
+  #         token: ${{ secrets.GH_API_TOKEN }}
+  #         addUser: true
 
   integration: # make sure the action works with user-supplied params
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ./
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          path: ./
           token: ${{ secrets.GH_API_TOKEN }}
+          ref: ${{ github.event.pull_request.head.sha }}
           repo: tremor-runtime
           owner: tremor-rs
           user: lelia
