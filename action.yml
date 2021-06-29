@@ -27,7 +27,7 @@ inputs:
   licenseWhitelist:
     description: 'List of allowed licenses for repository being forked'
     required: false
-    default: ''
+    default: 'undefined'
 runs:
   using: 'node12'
   main: 'dist/index.js'
