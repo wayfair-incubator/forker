@@ -8,7 +8,7 @@ on: # rebuild any PRs and main branch changes
 
 jobs:
 
-  build: # make sure build/ci work properly
+  🛠 build: # make sure build/ci work properly
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -30,12 +30,12 @@ jobs:
   #         owner: tremor-rs
   #         user: lelia
 
-  test: # make sure the action can fork into organizations
+  ✅ test: # make sure the action can fork into organizations
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: ./
-        name: ":rocket: test user workflow"
+        name: "🚀 test user workflow"
         with:
           path: ./
           token: ${{ secrets.GH_API_TOKEN }}
@@ -44,7 +44,7 @@ jobs:
           owner: tremor-rs
           user: lelia
       - uses: ./
-        name: ":octocat: test organization workflow"
+        name: "🌎 test organization workflow"
         with:
           path: ./
           token: ${{ secrets.GH_API_TOKEN }}
