@@ -31,6 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: ./
         with:
           path: ./
           token: ${{ secrets.GH_API_TOKEN }}
