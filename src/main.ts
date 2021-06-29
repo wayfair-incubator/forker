@@ -16,6 +16,7 @@ async function run(): Promise<void> {
   try {
     // Optionally enforce a whitelist of allowed repository licenses for forking
     if (licenseWhitelist) {
+      core.info(`🚨🚨🚨🚨🚨 LICENSE CHECK 🚨🚨🚨🚨🚨`)
       core.info(
         `⚖️ Checking repository license for ${repo} against provided whitelist...`
       )
