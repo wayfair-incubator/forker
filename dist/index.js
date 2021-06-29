@@ -55,10 +55,11 @@ function run() {
             core.info(`Value of license whitelist: ${licenseWhitelist}`);
             core.info(`Type of license whitelist: ${typeof licenseWhitelist}`);
             for (const entry of licenseWhitelist) {
+                core.info(`Type of entry: ${typeof entry}`);
                 core.info(`Array entry: ${entry}`);
             }
             core.info(`Length of array: ${licenseWhitelist.length}`);
-            if (licenseWhitelist !== []) {
+            if (licenseWhitelist.includes('undefined')) {
                 core.info(`🚨🚨🚨🚨🚨 LICENSE CHECK 🚨🚨🚨🚨🚨`);
                 core.info(`⚖️ Checking repository license for ${repo} against provided whitelist...`);
                 if (yield isValidLicense(owner, repo, licenseWhitelist)) {
