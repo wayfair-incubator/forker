@@ -1,11 +1,10 @@
 name: tests
-on: [push, pull_request]
-# on: # rebuild any PRs and main branch changes
-  # pull_request:
-  # push:
-  #   branches:
-  #     - main
-  #     - "releases/*"
+on: # rebuild any PRs and main branch changes
+  pull_request:
+  push:
+    branches:
+      - main
+      - "releases/*"
 
 jobs:
 
@@ -23,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./
-        name: "🚀 [TEST] github user workflow"
+        name: "🚀 test github user workflow"
         with:
           path: ./
           token: ${{ secrets.GH_API_TOKEN }}
@@ -32,7 +31,7 @@ jobs:
           owner: tremor-rs
           user: lelia
       - uses: ./
-        name: "🌎 [TEST] github organization workflow"
+        name: "🌎 test github org workflow"
         with:
           path: ./
           token: ${{ secrets.GH_API_TOKEN }}
