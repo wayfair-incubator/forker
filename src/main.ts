@@ -25,7 +25,7 @@ async function run(): Promise<void> {
       core.info(`Array entry: ${entry}`)
     }
     core.info(`Length of array: ${licenseWhitelist.length}`)
-    if (licenseWhitelist.includes('undefined')) {
+    if (!licenseWhitelist.includes('undefined')) {
       core.info(`🚨🚨🚨🚨🚨 LICENSE CHECK 🚨🚨🚨🚨🚨`)
       core.info(
         `⚖️ Checking repository license for ${repo} against provided whitelist...`
