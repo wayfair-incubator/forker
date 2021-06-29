@@ -1,23 +1,30 @@
 import * as core from '@actions/core'
 import {Octokit} from '@octokit/rest'
-const token = core.getInput('token', {required: true})
+const token: string = core.getInput('token', {required: true})
 const octokit = new Octokit({auth: token})
 
 async function run(): Promise<void> {
-  const owner = core.getInput('owner', {required: true})
-  const repo = core.getInput('repo', {required: true})
-  const org = core.getInput('org', {required: false})
-  const user = core.getInput('user', {required: false})
-  const addUser = core.getBooleanInput('addUser', {required: false})
-  const licenseWhitelist = core.getMultilineInput('licenseWhitelist', {
-    required: false
-  })
+  const owner: string = core.getInput('owner', {required: true})
+  const repo: string = core.getInput('repo', {required: true})
+  const org: string = core.getInput('org', {required: false})
+  const user: string = core.getInput('user', {required: false})
+  const addUser: boolean = core.getBooleanInput('addUser', {required: false})
+  const licenseWhitelist: string[] = core.getMultilineInput(
+    'licenseWhitelist',
+    {
+      required: false
+    }
+  )
 
   try {
     // Optionally enforce a whitelist of allowed repository licenses for forking
     core.info(`Value of license whitelist: ${licenseWhitelist}`)
     core.info(`Type of license whitelist: ${typeof licenseWhitelist}`)
-    if (typeof licenseWhitelist !== 'undefined') {
+    for (const entry of licenseWhitelist) {
+      core.info(`Array entry: ${entry}`)
+    }
+    core.info(`Length of array: ${licenseWhitelist.length}`)
+    if (licenseWhitelist !== []) {
       core.info(`🚨🚨🚨🚨🚨 LICENSE CHECK 🚨🚨🚨🚨🚨`)
       core.info(
         `⚖️ Checking repository license for ${repo} against provided whitelist...`

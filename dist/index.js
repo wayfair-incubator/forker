@@ -54,7 +54,11 @@ function run() {
             // Optionally enforce a whitelist of allowed repository licenses for forking
             core.info(`Value of license whitelist: ${licenseWhitelist}`);
             core.info(`Type of license whitelist: ${typeof licenseWhitelist}`);
-            if (typeof licenseWhitelist !== 'undefined') {
+            for (const entry of licenseWhitelist) {
+                core.info(`Array entry: ${entry}`);
+            }
+            core.info(`Length of array: ${licenseWhitelist.length}`);
+            if (licenseWhitelist !== []) {
                 core.info(`🚨🚨🚨🚨🚨 LICENSE CHECK 🚨🚨🚨🚨🚨`);
                 core.info(`⚖️ Checking repository license for ${repo} against provided whitelist...`);
                 if (yield isValidLicense(owner, repo, licenseWhitelist)) {
