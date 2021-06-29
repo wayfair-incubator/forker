@@ -8,6 +8,7 @@ inputs:
   token:
     description: 'Github API token'
     required: true
+    default: ${{ github.token }}
   owner:
     description: 'Owner of Github repository being forked'
     required: true
