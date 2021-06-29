@@ -52,7 +52,7 @@ function run() {
         });
         try {
             // Optionally enforce a whitelist of allowed repository licenses for forking
-            if (licenseWhitelist !== null) {
+            if (licenseWhitelist) {
                 core.info(`⚖️ Checking repository license for ${repo} against provided whitelist...`);
                 if (yield isValidLicense(owner, repo, licenseWhitelist)) {
                     core.info(`✅ Valid license, proceeding with fork creation`);
