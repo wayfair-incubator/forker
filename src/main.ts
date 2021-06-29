@@ -22,6 +22,7 @@ async function run(): Promise<void> {
     core.info(`Type of license whitelist: ${typeof licenseWhitelist}`)
     for (const entry of licenseWhitelist) {
       core.info(`Array entry: ${entry}`)
+      core.info(`Type of entry: ${typeof entry}`)
     }
     core.info(`Length of array: ${licenseWhitelist.length}`)
     if (licenseWhitelist.includes('undefined')) {
