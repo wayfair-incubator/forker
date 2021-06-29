@@ -29,7 +29,6 @@ on: # rebuild any PRs and main branch changes
         default: 'undefined'
 
 jobs:
-
   build: # make sure build/ci work properly
     runs-on: ubuntu-latest
     steps:
@@ -38,7 +37,6 @@ jobs:
           npm install
       - run: |
           npm run all
-
   test: # make sure the action can fork into organizations
     runs-on: ubuntu-latest
     steps:
