@@ -1,10 +1,11 @@
 name: tests
-on: # rebuild any PRs and main branch changes
-  pull_request:
-  push:
-    branches:
-      - main
-      # - "releases/*"
+on: [push, pull_request]
+# on: # rebuild any PRs and main branch changes
+  # pull_request:
+  # push:
+  #   branches:
+  #     - main
+  #     - "releases/*"
 
 jobs:
 
@@ -17,25 +18,12 @@ jobs:
       - run: |
           npm run all
 
-  # test: # make sure the action can fork to personal namespaces
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: ./
-  #       with:
-  #         path: ./
-  #         token: ${{ secrets.GH_API_TOKEN }}
-  #         ref: ${{ github.event.pull_request.head.sha }}
-  #         repo: tremor-runtime
-  #         owner: tremor-rs
-  #         user: lelia
-
   test: # make sure the action can fork into organizations
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: ./
-        name: "🚀 test user workflow"
+        name: "🚀 [TEST] github user workflow"
         with:
           path: ./
           token: ${{ secrets.GH_API_TOKEN }}
@@ -44,7 +32,7 @@ jobs:
           owner: tremor-rs
           user: lelia
       - uses: ./
-        name: "🌎 test organization workflow"
+        name: "🌎 [TEST] github organization workflow"
         with:
           path: ./
           token: ${{ secrets.GH_API_TOKEN }}
