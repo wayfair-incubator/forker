@@ -9,13 +9,15 @@ async function run(): Promise<void> {
   const org = core.getInput('org', {required: false})
   const user = core.getInput('user', {required: false})
   const addUser = core.getBooleanInput('addUser', {required: false})
-  const licenseWhitelist =
-    core.getMultilineInput('licenseWhitelist', {required: false}) || undefined
+  const licenseWhitelist = core.getMultilineInput('licenseWhitelist', {
+    required: false
+  })
 
   try {
     // Optionally enforce a whitelist of allowed repository licenses for forking
     core.info(`Value of license whitelist: ${licenseWhitelist}`)
-    if (licenseWhitelist !== undefined) {
+    core.info(`Type of license whitelist: ${typeof licenseWhitelist}`)
+    if (typeof licenseWhitelist !== 'undefined') {
       core.info(`🚨🚨🚨🚨🚨 LICENSE CHECK 🚨🚨🚨🚨🚨`)
       core.info(
         `⚖️ Checking repository license for ${repo} against provided whitelist...`
