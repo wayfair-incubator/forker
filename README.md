@@ -15,7 +15,7 @@ For legal and compliance reasons, organizations or individuals can choose to pro
 
 ## Developing
 
-> First, you'll need to have a reasonably modern version of `node` handy. This won't work with versions older than 9, for instance.
+> 💡 **Tip:**  You'll want to have a reasonably modern version of `node` handy. This won't work with versions older than 9, for instance.
 
 Install the dependencies  
 
@@ -78,18 +78,9 @@ See the [Actions tab](https://github.com/lelia/forker/actions) to view runs of t
 
 ## Usage
 
-If you're actively developing a new feature for the action, you can use a specific commit SHA:
+### Typical
 
-```yaml
-uses: lelia/forker@8c0d44f7a41c5819d07884857a6cfc3b2398d064
-with:
-  token: ${{ secrets.GH_API_TOKEN }}
-  repo: tremor-runtime
-  owner: tremor-rs
-  user: lelia
-```
-
-If you have already published a [semver tag](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) for your changes, you can reference the latest stable version directly:
+In most cases, you'll want to use the latest stable version (eg. `v0.0.1`):
 
 ```yaml
 uses: lelia/forker@releases/v0.0.1
@@ -99,6 +90,21 @@ with:
   owner: tremor-rs
   user: lelia
 ```
+
+### Development
+
+If you're actively developing a new feature for the action, you can always reference a specific commit SHA (eg. `16a9cab520b7f00e68397a7b8a4067ac40353230`):
+
+```yaml
+uses: lelia/forker@16a9cab520b7f00e68397a7b8a4067ac40353230
+with:
+  token: ${{ secrets.GH_API_TOKEN }}
+  repo: tremor-runtime
+  owner: tremor-rs
+  user: lelia
+```
+
+### Advanced
 
 If you are automating forking on behalf of a Github organization, you may wish to leverage the optional `addUser` and `licenseWhitelist` params:
 
