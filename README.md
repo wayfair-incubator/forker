@@ -1,5 +1,8 @@
 # ⑂ forker
 
+[![version](https://img.shields.io/badge/version-0.0.1-7f187f.svg)](https://github.com/lelia/forker/releases)
+![license: MIT](https://img.shields.io/badge/license-MIT-0fa573.svg)
+[![contributor covenant](https://img.shields.io/badge/contributor%20covenant-2.0-4baaaa.svg)](CODE_OF_CONDUCT.md)
 [![tests](https://github.com/lelia/forker/actions/workflows/test.yml/badge.svg)](https://github.com/lelia/forker/actions/workflows/test.yml)
 
 Github action to automate fork creation. This action uses [octokit.js](https://github.com/octokit/octokit.js) and the [GitHub API](https://docs.github.com/en/rest) to automatically create a repository fork, either in your personal namespace or an organization you administer.
