@@ -34,12 +34,13 @@ async function run(): Promise<void> {
 
     // Fork the specified repo into user namespace, unless an organization is specified
     core.info(`⑂ Creating fork of repository ${repo}...`)
-    const {data} = await octokit.request('POST /repos/{owner}/{repo}/forks', {
-      owner,
-      repo,
-      organization: org ? org : ''
-    })
-    core.info(`🎉 Forked repository now available at: ${data.html_url}`)
+    await forkRepo(owner, repo, org)
+    // const {data} = await octokit.request('POST /repos/{owner}/{repo}/forks', {
+    //   owner,
+    //   repo,
+    //   organization: org ? org : ''
+    // })
+    // core.info(`🎉 Forked repository now available at: ${data.html_url}`)
 
     // Optionally check org membership status for a specified user, and invite if missing
     if (addUser && typeof user !== 'undefined') {
@@ -59,6 +60,32 @@ async function run(): Promise<void> {
     }
   } catch (err) {
     core.setFailed(`🚨 Failed to create repository fork: ${err.message}`)
+  }
+}
+
+async function forkRepo(
+  owner: string,
+  repo: string,
+  org?: string
+): Promise<void> {
+  let data
+  try {
+    data = await octokit.request('POST /repos/{owner}/{repo}/forks', {
+      owner,
+      repo,
+      organization: org ? org : ''
+    })
+    if (data.status === 202) {
+      core.info(`🎉 Forked repository now available at: ${data.html_url}`)
+    } else {
+      core.setFailed(`🚨 Failed to create fork of repository: ${repo}`)
+    }
+  } catch (err) {
+    if (err.status === 403) {
+      core.setFailed(
+        `🚨 Insufficient permission to fork repository: ${err.message}`
+      )
+    }
   }
 }
 
