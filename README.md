@@ -86,7 +86,7 @@ with:
 If you're actively [developing](#Developing) a new feature for the action, you can always reference a specific commit SHA (eg. `16a9cab520b7f00e68397a7b8a4067ac40353230`):
 
 ```yaml
-uses: lelia/forker@16a9cab520b7f00e68397a7b8a4067ac40353230
+uses: lelia/forker@899add26c0bb00f6c8366cd8c5555e9309580193
 with:
   token: ${{ secrets.GH_API_TOKEN }}
   repo: tremor-runtime
