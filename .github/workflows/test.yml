@@ -1,4 +1,5 @@
-name: tests
+name: Tests
+
 on: # rebuild any PRs and main branch changes
   pull_request:
   push:
