@@ -35,12 +35,6 @@ async function run(): Promise<void> {
     // Fork the specified repo into user namespace, unless an organization is specified
     core.info(`⑂ Creating fork of repository ${repo}...`)
     await forkRepo(owner, repo, org)
-    // const {data} = await octokit.request('POST /repos/{owner}/{repo}/forks', {
-    //   owner,
-    //   repo,
-    //   organization: org ? org : ''
-    // })
-    // core.info(`🎉 Forked repository now available at: ${data.html_url}`)
 
     // Optionally check org membership status for a specified user, and invite if missing
     if (addUser && typeof user !== 'undefined') {
@@ -68,37 +62,35 @@ async function forkRepo(
   repo: string,
   org?: string
 ): Promise<void> {
-  let data
   try {
-    data = await octokit.request('POST /repos/{owner}/{repo}/forks', {
+    const res = await octokit.request('POST /repos/{owner}/{repo}/forks', {
       owner,
       repo,
       organization: org ? org : ''
     })
-    if (data.status === 202) {
-      core.info(`🎉 Forked repository now available at: ${data.html_url}`)
-    } else {
-      core.setFailed(`🚨 Failed to create fork of repository: ${repo}`)
+    if (res.status === 202) {
+      core.info(`🎉 Forked repository now available at: ${res.data.html_url}`)
     }
   } catch (err) {
     if (err.status === 403) {
       core.setFailed(
         `🚨 Insufficient permission to fork repository: ${err.message}`
       )
+    } else {
+      core.setFailed(`🚨 Failed to create fork of repository: ${repo}`)
     }
   }
 }
 
 async function getOrgMembership(org: string, user: string): Promise<string> {
-  let data
   try {
-    data = await octokit.request('GET /orgs/{org}/members/{username}', {
+    const res = await octokit.request('GET /orgs/{org}/members/{username}', {
       org,
       username: user
     })
     // @ts-expect-error only return membership URL if response code is 204
-    if (data.status === 204) {
-      return data.url
+    if (res.status === 204) {
+      return res.url
     } else {
       core.setFailed(
         `🚨 Failed to retrieve membership status for user: ${user}`
