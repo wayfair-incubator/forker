@@ -10,7 +10,7 @@
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",
     "package": "ncc build --source-map --license licenses.txt",
-    "test": "echo \"Error: no test specified\" && exit 0",
+    "test": "jest",
     "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
   },
   "repository": {
@@ -18,9 +18,9 @@
     "url": "git+https://github.com/lelia/forker.git"
   },
   "keywords": [
+    "github",
     "actions",
-    "node",
-    "setup"
+    "fork"
   ],
   "author": "lelia",
   "license": "MIT",
