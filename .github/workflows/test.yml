@@ -29,15 +29,17 @@ on: # rebuild any PRs and main branch changes
         default: 'undefined'
 
 jobs:
-  build: # make sure build/ci work properly
+  build:
     runs-on: ubuntu-latest
+    env:
+      INPUT_TOKEN: ${{ secrets.GH_API_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - run: |
           npm install
       - run: |
           npm run all
-  test: # make sure the action can fork into organizations
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
