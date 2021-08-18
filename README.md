@@ -5,17 +5,17 @@
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-24B8EE.svg)](CODE_OF_CONDUCT.md)
 [![Tests](https://github.com/lelia/forker/actions/workflows/test.yml/badge.svg)](https://github.com/lelia/forker/actions/workflows/test.yml)
 
-Github action to automate fork creation. This action uses [octokit.js](https://github.com/octokit/octokit.js) and the [GitHub API](https://docs.github.com/en/rest) to automatically create a repository fork, either in your personal namespace or an organization you administer.
+GitHub action to automate fork creation. This action uses [octokit.js](https://github.com/octokit/octokit.js) and the [GitHub API](https://docs.github.com/en/rest) to automatically create a repository fork, either in your personal namespace or an organization you administer.
 
 Before forking a repository into an organization, `forker` will check membership and outside collaborator status for the user requesting the fork. When the `addUser` option is enabled, `forker` will automatically invite the specified `user` to become a member of the organization where the fork has been requested.
 
-For legal and compliance reasons, organizations or individuals can choose to provide an optional `licenseAllowlist` to compare against the [license of the repository](https://docs.github.com/en/rest/reference/licenses) being forked. If the license key returned by the Github API is not found within the provided allowlist, `forker` will exit without forking the repository.
+For legal and compliance reasons, organizations or individuals can choose to provide an optional `licenseAllowlist` to compare against the [license of the repository](https://docs.github.com/en/rest/reference/licenses) being forked. If the license key returned by the GitHub API is not found within the provided allowlist, `forker` will exit without forking the repository.
 
 ## Inputs
 
 ### `token` (string, required)
 
-The Github API [token](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token) you wish to use for automating fork creation. If you are using Github [encrypted secrets](https://docs.github.com/en/actions/reference/encrypted-secrets#using-encrypted-secrets-in-a-workflow), you should reference the variable name you have defined for your secret.
+The GitHub API [token](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token) you wish to use for automating fork creation. If you are using GitHub [encrypted secrets](https://docs.github.com/en/actions/reference/encrypted-secrets#using-encrypted-secrets-in-a-workflow), you should reference the variable name you have defined for your secret.
 
 > 💡 **Note:** Ensure the token you are using has sufficient permissions to create repositories in your intended destination (either an organization or individual user account).
 
@@ -25,35 +25,35 @@ The Github API [token](https://docs.github.com/en/github/authenticating-to-githu
 
 ### `owner` (string, required)
 
-The owner of the Github repository you wish to fork. Can be an organization or individual user account.
+The owner of the GitHub repository you wish to fork. Can be an organization or individual user account.
 
 **Example:** `tremor-rs`
 
 ### `repo` (string, required)
 
-The name of the Github repository you wish to fork.
+The name of the GitHub repository you wish to fork.
 
 **Example:** `tremor-runtime`
 
 ### `org` (string, optional)
 
-The name of the destination Github organization where you wish to fork the specified repository.
+The name of the destination GitHub organization where you wish to fork the specified repository.
 
 **Example:** `wayfair-contribs`
 
 ### `user` (string, optional)
 
-The Github account for the person requesting the fork.
+The GitHub account for the person requesting the fork.
 
-> 💡 **Note:** This is only required if you are managing a Github organization, and wish to associate a specific user with the fork request. If neither `org` nor `user` inputs are specified, `forker` will default to forking the repository into your own Github account.
+> 💡 **Note:** This is only required if you are managing a GitHub organization, and wish to associate a specific user with the fork request. If neither `org` nor `user` inputs are specified, `forker` will default to forking the repository into your own GitHub account.
 
 **Example:** `lelia`
 
 ### `addUser` (boolean, optional)
 
-When used in combination with the `org` and `user` inputs, the `addUser` option will automatically invite a specified Github user to the destination organization if they are not already a member.
+When used in combination with the `org` and `user` inputs, the `addUser` option will automatically invite a specified GitHub user to the destination organization if they are not already a member.
 
-> 💡 **Note:** The email invitation will be sent from whichever account is used to authenticate the Github action and fork the requested repository, meaning there must be sufficient permissions to invite outside users to the organization.
+> 💡 **Note:** The email invitation will be sent from whichever account is used to authenticate the GitHub action and fork the requested repository, meaning there must be sufficient permissions to invite outside users to the organization.
 
 **Example:** `true`
 
@@ -63,7 +63,7 @@ When used in combination with the `org` and `user` inputs, the `addUser` option 
 
 A newline-delimited (`"\n"`) string representing a list of allowed [license keys](https://docs.github.com/en/rest/reference/licenses) for the repository being forked. If the license key returned by the [Licenses API](https://docs.github.com/en/rest/reference/licenses) is not found within the `licenseAllowlist`, `forker` will **not** fork the repository, and instead exit with a warning.
 
-> 💡 **Tip:** You can always reference [this directory](https://github.com/github/choosealicense.com/tree/gh-pages/_licenses) if you need a comprehensive list of license keys, beyond the commonly-used licenses returned from `GET /licenses` in the [Github REST API](https://docs.github.com/en/rest/reference/licenses#get-all-commonly-used-licenses).
+> 💡 **Tip:** You can always reference [this directory](https://github.com/github/choosealicense.com/tree/gh-pages/_licenses) if you need a comprehensive list of license keys, beyond the commonly-used licenses returned from `GET /licenses` in the [GitHub REST API](https://docs.github.com/en/rest/reference/licenses#get-all-commonly-used-licenses).
 
 **Example:** `"0bsd\napache-2.0\nmit"`
 
@@ -97,7 +97,7 @@ with:
 
 ### Advanced
 
-If you are automating forking on behalf of a Github organization, you may wish to leverage the optional `addUser` and `licenseAllowlist` params:
+If you are automating forking on behalf of a GitHub organization, you may wish to leverage the optional `addUser` and `licenseAllowlist` params:
 
 ```yaml
 uses: lelia/forker@releases/v0.0.1
