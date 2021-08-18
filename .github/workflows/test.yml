@@ -32,7 +32,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      INPUT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # INPUT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # INPUT_TOKEN: ${{ secrets.GH_API_TOKEN }}
     steps:
       - uses: actions/checkout@v2
@@ -48,8 +48,8 @@ jobs:
         name: "🚀 test github user workflow"
         with:
           path: ./
-          token: ${{ secrets.GITHUB_TOKEN }}
-          # token: ${{ secrets.GH_API_TOKEN }}
+          # token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_API_TOKEN }}
           ref: ${{ github.event.pull_request.head.sha }}
           repo: tremor-runtime
           owner: tremor-rs
