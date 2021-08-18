@@ -9,7 +9,7 @@ Github action to automate fork creation. This action uses [octokit.js](https://g
 
 Before forking a repository into an organization, `forker` will check membership and outside collaborator status for the user requesting the fork. When the `addUser` option is enabled, `forker` will automatically invite the specified `user` to become a member of the organization where the fork has been requested.
 
-For legal and compliance reasons, organizations or individuals can choose to provide an optional `licenseWhitelist` to compare against the [license of the repository](https://docs.github.com/en/rest/reference/licenses) being forked. If the license key returned by the Github API is not found within the provided whitelist, `forker` will exit without forking the repository.
+For legal and compliance reasons, organizations or individuals can choose to provide an optional `licenseAllowlist` to compare against the [license of the repository](https://docs.github.com/en/rest/reference/licenses) being forked. If the license key returned by the Github API is not found within the provided allowlist, `forker` will exit without forking the repository.
 
 ## Inputs
 
@@ -59,9 +59,9 @@ When used in combination with the `org` and `user` inputs, the `addUser` option 
 
 **Default:** `false`
 
-### `licenseWhitelist` (optional, string)
+### `licenseAllowlist` (optional, string)
 
-A newline-delimited (`"\n"`) string representing a list of allowed [license keys](https://docs.github.com/en/rest/reference/licenses) for the repository being forked. If the license key returned by the [Licenses API](https://docs.github.com/en/rest/reference/licenses) is not found within the `licenseWhitelist`, `forker` will **not** fork the repository, and instead exit with a warning.
+A newline-delimited (`"\n"`) string representing a list of allowed [license keys](https://docs.github.com/en/rest/reference/licenses) for the repository being forked. If the license key returned by the [Licenses API](https://docs.github.com/en/rest/reference/licenses) is not found within the `licenseAllowlist`, `forker` will **not** fork the repository, and instead exit with a warning.
 
 > 💡 **Tip:** You can always reference [this directory](https://github.com/github/choosealicense.com/tree/gh-pages/_licenses) if you need a comprehensive list of license keys, beyond the commonly-used licenses returned from `GET /licenses` in the [Github REST API](https://docs.github.com/en/rest/reference/licenses#get-all-commonly-used-licenses).
 
@@ -97,7 +97,7 @@ with:
 
 ### Advanced
 
-If you are automating forking on behalf of a Github organization, you may wish to leverage the optional `addUser` and `licenseWhitelist` params:
+If you are automating forking on behalf of a Github organization, you may wish to leverage the optional `addUser` and `licenseAllowlist` params:
 
 ```yaml
 uses: lelia/forker@releases/v0.0.1
@@ -108,7 +108,7 @@ with:
   org: wayfair-contribs
   user: lelia
   addUser: true
-  licenseWhitelist: "0bsd\napache-2.0\nmit"
+  licenseAllowlist: "0bsd\napache-2.0\nmit"
 ```
 
 ## Developing

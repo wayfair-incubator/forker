@@ -25,7 +25,7 @@ inputs:
     description: 'Add Github user to organization if missing'
     required: false
     default: false
-  licenseWhitelist:
+  licenseAllowlist:
     description: 'List of allowed licenses for repository being forked'
     required: false
     default: 'undefined'

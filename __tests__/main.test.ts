@@ -6,6 +6,6 @@ test('action throws error without required inputs', async () => {
   try {
     await run()
   } catch (err) {
-    expect(err).toEqual(new Error("Input required and not supplied: owner"))
+    expect(err).toEqual(new Error('Input required and not supplied: owner'))
   }
 })

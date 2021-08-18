@@ -23,7 +23,7 @@ on: # rebuild any PRs and main branch changes
         description: 'Add Github user to organization if missing'
         required: false
         default: false
-      licenseWhitelist:
+      licenseAllowlist:
         description: 'List of allowed licenses for repository being forked'
         required: false
         default: 'undefined'
@@ -58,7 +58,7 @@ jobs:
           path: ./
           token: ${{ secrets.GH_API_TOKEN }}
           ref: ${{ github.event.pull_request.head.sha }}
-          licenseWhitelist: "0bsd\napache-2.0\nmit"
+          licenseAllowlist: "0bsd\napache-2.0\nmit"
           repo: roadie-backstage-plugins
           owner: RoadieHQ
           org: wayfair-contribs

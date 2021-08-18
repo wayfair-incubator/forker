@@ -7,8 +7,8 @@ export async function run(): Promise<void> {
   const org: string = core.getInput('org', {required: false})
   const user: string = core.getInput('user', {required: false})
   const addUser: boolean = core.getBooleanInput('addUser', {required: false})
-  const licenseWhitelist: string[] = core.getMultilineInput(
-    'licenseWhitelist',
+  const licenseAllowlist: string[] = core.getMultilineInput(
+    'licenseAllowlist',
     {
       required: false
     }
@@ -16,11 +16,11 @@ export async function run(): Promise<void> {
 
   try {
     // Optionally enforce a whitelist of allowed repository licenses for forking
-    if (!licenseWhitelist.includes('undefined')) {
+    if (!licenseAllowlist.includes('undefined')) {
       core.info(
         `⚖️ Checking repository license for ${repo} against provided whitelist...`
       )
-      if (await isValidLicense(owner, repo, licenseWhitelist)) {
+      if (await isValidLicense(owner, repo, licenseAllowlist)) {
         core.info(`✅ Valid license, proceeding with fork creation`)
       } else {
         core.setFailed(
