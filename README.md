@@ -17,11 +17,9 @@ For legal and compliance reasons, organizations or individuals can choose to pro
 
 The GitHub API [token](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token) you wish to use for automating fork creation. If you are using GitHub [encrypted secrets](https://docs.github.com/en/actions/reference/encrypted-secrets#using-encrypted-secrets-in-a-workflow), you should reference the variable name you have defined for your secret.
 
-> 💡 **Note:** Ensure the token you are using has sufficient permissions to create repositories in your intended destination (either an organization or individual user account).
+> 💡 **Note:** Ensure the token you are using has sufficient permissions to fork repositories into your intended destination (either an organization or individual user account). In particular, the builtin `GITHUB_TOKEN` has [read-only permissions](https://docs.github.com/en/actions/reference/authentication-in-a-workflow#permissions-for-the-github_token) for repository forks, and therefore may not provide sufficient privileges for use with `forker`.
 
 **Example:** `${{ secrets.GH_API_TOKEN }}`
-
-**Default:** `${{ github.token }}`
 
 ### `owner` (string, required)
 
@@ -45,7 +43,7 @@ The name of the destination GitHub organization where you wish to fork the speci
 
 The GitHub account for the person requesting the fork.
 
-> 💡 **Note:** This is only required if you are managing a GitHub organization, and wish to associate a specific user with the fork request. If neither `org` nor `user` inputs are specified, `forker` will default to forking the repository into your own GitHub account.
+> 💡 **Note:** This is only required if you are managing a GitHub organization, and wish to associate a specific user with the fork request. If neither `org` nor `user` inputs are specified, `forker` will default to forking the repository into your own GitHub account. Similarly, if _only_ `user` is provided without an accompanying `org`, forker will ignore the field, since users cannot create forks on behalf of other users, only GitHub organizations.
 
 **Example:** `lelia`
 
