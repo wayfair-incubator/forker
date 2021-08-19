@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       INPUT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    if: github.event.review.state == 'approved'
+    # if: github.event.review.state == 'approved'
     steps:
       - uses: actions/checkout@v2
       - run: |
