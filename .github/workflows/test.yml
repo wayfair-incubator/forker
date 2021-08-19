@@ -31,8 +31,8 @@ on: # rebuild any PRs and main branch changes
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      INPUT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # env:
+    #   INPUT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - run: |
