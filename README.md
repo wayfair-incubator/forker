@@ -111,7 +111,7 @@ with:
 
 ## Developing
 
-> 💡 **Tip:**  You'll want to have a reasonably modern version of `node` handy. This won't work with versions older than 9, for instance.
+> 💡 **Tip:** Please use [node](https://nodejs.org/en/download/releases/) v9.x or later, as well as an npm-compatible version of [typescript](https://www.npmjs.com/package/typescript).
 
 Install the dependencies
 
