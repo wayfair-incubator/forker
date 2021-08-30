@@ -49,7 +49,17 @@ function forkRepo(owner, repo, org) {
                 repo,
                 organization: org ? org : ''
             });
+            // Forks requests are still 'Accepted' (202) if the repository already exists at the specified location
+            // However, repositories with the same name but a different source are auto-incremented (eg. my-forked-repo-1)
             if (res.status === 202) {
+                // Regex to determine whether the repository ends with a dash and a number
+                const regex = /-\d+$/;
+                const url = res.data.html_url;
+                if (regex.test(url)) {
+                    core.info(`⚠️ Warning: A repository with the same name may already exist at the target destination!`);
+                    core.info(`As a result, the new repository fork URL might be auto-incremented (eg. my-forked-repo-1).`);
+                    core.info(`If this was not intentional, please check for exisiting repositories on your Github account or organization!\n`);
+                }
                 core.info(`🎉 Forked repository now available at: ${res.data.html_url}`);
             }
         }
