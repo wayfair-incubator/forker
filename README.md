@@ -72,7 +72,7 @@ A newline-delimited (`"\n"`) string representing a list of allowed [license keys
 In most cases, you'll want to use the latest stable version (eg. `v0.0.1`):
 
 ```yaml
-uses: lelia/forker@releases/v0.0.1
+uses: lelia/forker@v0.0.1
 with:
   token: ${{ secrets.GH_API_TOKEN }}
   repo: tremor-runtime
@@ -98,7 +98,7 @@ with:
 If you are automating forking on behalf of a GitHub organization, you may wish to leverage the optional `addUser` and `licenseAllowlist` params:
 
 ```yaml
-uses: lelia/forker@releases/v0.0.1
+uses: lelia/forker@v0.0.1
 with:
   token: ${{ secrets.GH_API_TOKEN }}
   repo: tremor-runtime
