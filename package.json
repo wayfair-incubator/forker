@@ -15,17 +15,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/lelia/forker.git"
   },
   "keywords": [
+    "github",
     "actions",
-    "node",
-    "setup"
+    "fork"
   ],
   "author": "lelia",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.6"
+    "@actions/core": "^1.4.0",
+    "@octokit/rest": "^18.5.6"
   },
   "devDependencies": {
     "@types/jest": "^26.0.15",

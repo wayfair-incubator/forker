@@ -1,24 +1,66 @@
-name: tests
+name: Tests
+
 on: # rebuild any PRs and main branch changes
   pull_request:
   push:
     branches:
       - main
-      - "releases/*"
+  workflow_dispatch:
+    inputs:
+      owner:
+        description: 'Owner of Github repository being forked'
+        required: true
+      repo:
+        description: 'Github repository being forked'
+        required: true
+      org:
+        description: 'Github organization to fork the repository into'
+        required: false
+      user:
+        description: 'Github user requesting the fork'
+        required: false
+      addUser:
+        description: 'Add Github user to organization if missing'
+        required: false
+        default: false
+      licenseAllowlist:
+        description: 'List of allowed licenses for repository being forked'
+        required: false
+        default: 'undefined'
 
 jobs:
-  build: # make sure build/ci work properly
+  build:
     runs-on: ubuntu-latest
+    env:
+      INPUT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - run: |
           npm install
       - run: |
           npm run all
-  test: # make sure the action works on a clean machine without building
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: ./
+        name: "🚀 test github user workflow"
         with:
-          milliseconds: 1000
+          path: ./
+          token: ${{ secrets.GH_API_TOKEN }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          repo: tremor-runtime
+          owner: tremor-rs
+          user: lelia
+      - uses: ./
+        name: "🌎 test github org workflow"
+        with:
+          path: ./
+          token: ${{ secrets.GH_API_TOKEN }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          licenseAllowlist: "0bsd\napache-2.0\nmit"
+          repo: roadie-backstage-plugins
+          owner: RoadieHQ
+          org: wayfair-contribs
+          user: lelia
+          addUser: true
