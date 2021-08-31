@@ -1,27 +1,27 @@
-name: 'Forker'
+name: 'GitHub Forker'
 author: 'lelia'
 branding:
   icon: 'git-branch'
   color: 'green'
-description: 'Github action for automating fork creation'
+description: 'GitHub action for automating fork creation'
 inputs:
   token:
-    description: 'Github API token with forking permissions'
+    description: 'GitHub API token with forking permissions'
     required: true
   owner:
-    description: 'Owner of Github repository being forked'
+    description: 'Owner of GitHub repository being forked'
     required: true
   repo:
-    description: 'Github repository being forked'
+    description: 'GitHub repository being forked'
     required: true
   org:
-    description: 'Github organization to fork the repository into'
+    description: 'GitHub organization to fork the repository into'
     required: false
   user:
-    description: 'Github user requesting the fork'
+    description: 'GitHub user requesting the fork'
     required: false
   addUser:
-    description: 'Add Github user to organization if missing'
+    description: 'Add GitHub user to organization if missing'
     required: false
     default: false
   licenseAllowlist:
