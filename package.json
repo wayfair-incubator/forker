@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lelia/forker.git"
+    "url": "git+https://github.com/wayfair-incubator/forker"
   },
   "keywords": [
     "github",
