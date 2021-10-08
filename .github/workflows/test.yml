@@ -24,7 +24,7 @@ jobs:
       - uses: ./
         name: "🚀 test github user workflow"
         with:
-          token: ${{ secrets.ACCESS_TOKEN }}
+          token: "${{ secrets.ACCESS_TOKEN }}"
           # ref: ${{ github.event.pull_request.head.sha }}
           repo: tremor-runtime
           owner: tremor-rs
