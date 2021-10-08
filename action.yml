@@ -7,8 +7,7 @@ description: 'GitHub action for automating fork creation'
 inputs:
   token:
     description: 'GitHub API token with forking permissions'
-    required: false
-    # required: true
+    required: true
   owner:
     description: 'Owner of GitHub repository being forked'
     required: true
