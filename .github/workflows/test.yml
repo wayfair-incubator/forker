@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: wayfair-incubator/forker@v0.0.1
+      - uses: ./
         name: "🚀 test github user workflow"
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
