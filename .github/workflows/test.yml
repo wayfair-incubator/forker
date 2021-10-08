@@ -7,16 +7,16 @@ on: # rebuild any PRs and main branch changes
       - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    env:
-      INPUT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - uses: actions/checkout@v2
-      - run: |
-          npm install
-      - run: |
-          npm run all
+  # build:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     INPUT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - run: |
+  #         npm install
+  #     - run: |
+  #         npm run all
   test:
     runs-on: ubuntu-latest
     steps:
