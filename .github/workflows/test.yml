@@ -45,20 +45,24 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         name: "🚀 test github user workflow"
+        env:
+          INPUT_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         with:
           path: ./
           # token: ${{ secrets.GH_API_TOKEN }}
-          token: ${{ secrets.ACCESS_TOKEN }}
+          # token: ${{ secrets.ACCESS_TOKEN }}
           ref: ${{ github.event.pull_request.head.sha }}
           repo: tremor-runtime
           owner: tremor-rs
           user: lelia
       - uses: ./
         name: "🌎 test github org workflow"
+        env:
+          INPUT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           path: ./
           # token: ${{ secrets.GH_API_TOKEN }}
-          token: ${{ secrets.ACCESS_TOKEN }}
+          # token: ${{ secrets.ACCESS_TOKEN }}
           ref: ${{ github.event.pull_request.head.sha }}
           licenseAllowlist: "0bsd\napache-2.0\nmit"
           repo: roadie-backstage-plugins
