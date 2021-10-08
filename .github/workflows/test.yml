@@ -24,10 +24,9 @@ jobs:
       - uses: wayfair-incubator/forker@v0.0.1
         name: "🚀 test github user workflow"
         with:
-          # token: ${{ secrets.ACCESS_TOKEN }}
+          token: ${{ secrets.ACCESS_TOKEN }}
           # ref: ${{ github.event.pull_request.head.sha }}
-          repo: ${{ secrets.REPO_TEST }}
-          # repo: tremor-runtime
+          repo: tremor-runtime
           owner: tremor-rs
           user: lelia
           # path: ./
