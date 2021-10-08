@@ -88,13 +88,10 @@ export async function getRepoLicense(
       owner,
       repo
     })
-    if (res.status === 200) {
-      let licenseData: any = res.data.license
-      return licenseData.key
+    if (res.status === 200 && res.data.license !== null) {
+      return res.data.license.key
     } else {
-      core.setFailed(
-        `🚨 Failed to retrieve license for repository: ${repo}`
-      )
+      core.setFailed(`🚨 Failed to retrieve license for repository: ${repo}`)
       return ''
     }
   } catch (err) {
@@ -113,9 +110,7 @@ export async function getUserId(user: string): Promise<number> {
     if (res.status === 200) {
       return res.data.id
     } else {
-      core.setFailed(
-        `🚨 Failed to retrieve ID for user: ${user}`
-      )
+      core.setFailed(`🚨 Failed to retrieve ID for user: ${user}`)
       return -1
     }
   } catch (err) {
