@@ -84,13 +84,14 @@ export async function getRepoLicense(
   repo: string
 ): Promise<string> {
   try {
-    const {data} = await octokit.request('GET /repos/{owner}/{repo}/license', {
+    const res = await octokit.request('GET /repos/{owner}/{repo}/license', {
       owner,
       repo
     })
-    if (data !== null && data.license !== null) {
-      return data.license.key
+    if (res.status === 200 && res.data.license !== null) {
+      return res.data.license.key
     } else {
+      core.setFailed(`🚨 Failed to retrieve license for repository: ${repo}`)
       return ''
     }
   } catch (err) {
@@ -101,29 +102,32 @@ export async function getRepoLicense(
   }
 }
 
-export async function getUserId(user: string): Promise<string> {
+export async function getUserId(user: string): Promise<number> {
   try {
-    const {data} = await octokit.request('GET /users/{username}', {
+    const res = await octokit.request('GET /users/{username}', {
       username: user
     })
-    return data.id
+    if (res.status === 200) {
+      return res.data.id
+    } else {
+      core.setFailed(`🚨 Failed to retrieve ID for user: ${user}`)
+      return -1
+    }
   } catch (err) {
     core.setFailed(`🚨 Failed to retrieve user ID for user: ${err.message}`)
-    return ''
+    return -1
   }
 }
 
 export async function inviteMember(org: string, user: string): Promise<void> {
   const id = await getUserId(user)
-  const userId = Number.parseInt(id)
-  core.debug(`Got user ID: ${userId}`)
-  let data
+  core.debug(`Got user ID: ${id}`)
   try {
-    data = await octokit.request('POST /orgs/{org}/invitations', {
+    const res = await octokit.request('POST /orgs/{org}/invitations', {
       org,
-      invitee_id: userId
+      invitee_id: id
     })
-    if (data.status === 201) {
+    if (res.status === 201) {
       core.debug(`User successfully invited`)
     } else {
       core.debug(`Unable to validate invitation`)
