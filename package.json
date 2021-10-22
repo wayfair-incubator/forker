@@ -1,6 +1,6 @@
 {
   "name": "forker",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "description": "Github action for automating fork creation",
   "main": "lib/main.js",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lelia/forker.git"
+    "url": "git+https://github.com/wayfair-incubator/forker"
   },
   "keywords": [
     "github",
@@ -25,22 +25,22 @@
   "author": "lelia",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.4.0",
-    "@octokit/rest": "^18.5.6"
+    "@actions/core": "^1.6.0",
+    "@octokit/rest": "^18.12.0"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.15",
+    "@types/jest": "^27.0.2",
     "@types/node": "^14.14.9",
-    "@typescript-eslint/parser": "^4.8.1",
+    "@typescript-eslint/parser": "^4.33.0",
     "@vercel/ncc": "^0.25.1",
-    "eslint": "^7.17.0",
-    "eslint-plugin-github": "^4.1.1",
-    "eslint-plugin-jest": "^24.1.3",
-    "jest": "^26.6.3",
-    "jest-circus": "^26.6.3",
-    "js-yaml": "^3.14.0",
-    "prettier": "2.2.1",
-    "ts-jest": "^26.4.4",
+    "eslint": "^7.32.0",
+    "eslint-plugin-github": "^4.3.2",
+    "eslint-plugin-jest": "^25.2.2",
+    "jest": "^27.3.1",
+    "jest-circus": "^27.3.1",
+    "js-yaml": "^4.1.0",
+    "prettier": "2.4.1",
+    "ts-jest": "^27.0.7",
     "typescript": "^4.1.3"
   }
 }
