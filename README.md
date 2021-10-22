@@ -1,9 +1,9 @@
 # ⑂ forker
 
-[![Version](https://img.shields.io/badge/Version-0.0.1-7F187F.svg)](https://github.com/lelia/forker/releases)
+[![Version](https://img.shields.io/badge/Version-0.0.2-7F187F.svg)](https://github.com/wayfair-incubator/forker/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-7462E0.svg)](LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-24B8EE.svg)](CODE_OF_CONDUCT.md)
-[![Tests](https://github.com/lelia/forker/actions/workflows/test.yml/badge.svg)](https://github.com/lelia/forker/actions/workflows/test.yml)
+[![Tests](https://github.com/wayfair-incubator/forker/actions/workflows/test.yml/badge.svg)](https://github.com/wayfair-incubator/forker/actions/workflows/test.yml)
 
 GitHub action to automate fork creation. This action uses [octokit.js](https://github.com/octokit/octokit.js) and the [GitHub API](https://docs.github.com/en/rest) to automatically create a repository fork, either in your personal namespace or an organization you administer.
 
@@ -19,7 +19,7 @@ The GitHub API [token](https://docs.github.com/en/github/authenticating-to-githu
 
 > 💡 **Note:** Ensure the token you are using has sufficient permissions to fork repositories into your intended destination (either an organization or individual user account). In particular, the builtin `GITHUB_TOKEN` has [read-only permissions](https://docs.github.com/en/actions/reference/authentication-in-a-workflow#permissions-for-the-github_token) for repository forks, and therefore may not provide sufficient privileges for use with `forker`.
 
-**Example:** `${{ secrets.GH_API_TOKEN }}`
+**Example:** `${{ secrets.ACCESS_TOKEN }}`
 
 ### `owner` (string, required)
 
@@ -69,12 +69,12 @@ A newline-delimited (`"\n"`) string representing a list of allowed [license keys
 
 ### Typical
 
-In most cases, you'll want to use the latest stable version (eg. `v0.0.1`):
+In most cases, you'll want to use the latest stable version (eg. `v0.0.2`):
 
 ```yaml
-uses: lelia/forker@v0.0.1
+uses: wayfair-incubator/forker@v0.0.2
 with:
-  token: ${{ secrets.GH_API_TOKEN }}
+  token: ${{ secrets.ACCESS_TOKEN }}
   repo: tremor-runtime
   owner: tremor-rs
   user: lelia
@@ -82,12 +82,12 @@ with:
 
 ### Development
 
-If you're actively [developing](#Developing) a new feature for the action, you can always reference a specific commit SHA (eg. `16a9cab520b7f00e68397a7b8a4067ac40353230`):
+If you're actively [developing](#Developing) a new feature for the action, you can always reference a specific commit SHA (eg. `98e4e7dcc6c9a8cb29c1f8de7d6d2c03dcabc4b9`):
 
 ```yaml
-uses: lelia/forker@899add26c0bb00f6c8366cd8c5555e9309580193
+uses: wayfair-incubator/forker@98e4e7dcc6c9a8cb29c1f8de7d6d2c03dcabc4b9
 with:
-  token: ${{ secrets.GH_API_TOKEN }}
+  token: ${{ secrets.ACCESS_TOKEN }}
   repo: tremor-runtime
   owner: tremor-rs
   user: lelia
@@ -98,9 +98,9 @@ with:
 If you are automating forking on behalf of a GitHub organization, you may wish to leverage the optional `addUser` and `licenseAllowlist` params:
 
 ```yaml
-uses: lelia/forker@v0.0.1
+uses: wayfair-incubator/forker@v0.0.2
 with:
-  token: ${{ secrets.GH_API_TOKEN }}
+  token: ${{ secrets.ACCESS_TOKEN }}
   repo: tremor-runtime
   owner: tremor-rs
   org: wayfair-contribs
@@ -146,7 +146,7 @@ Then run [ncc](https://github.com/zeit/ncc) and push the results:
 npm run package
 git add dist
 git commit -a -m "prod dependencies"
-git push origin releases/v0.0.1
+git push origin releases/v0.0.2
 ```
 
 > 💡 **Note:** We recommend using the `--license` option for `ncc`, which will create a license file for all of the production node modules used in your project.
@@ -163,11 +163,11 @@ You can now validate the action by referencing `./` in a workflow in your repo (
 uses: ./
 with:
   path: ./
-  token: ${{ secrets.GH_API_TOKEN }}
+  token: ${{ secrets.ACCESS_TOKEN }}
   ref: ${{ github.event.pull_request.head.sha }}
   repo: tremor-runtime
   owner: tremor-rs
   user: lelia
 ```
 
-See the [Actions tab](https://github.com/lelia/forker/actions) to view runs of this action!  ✅
+See the [Actions tab](https://github.com/wayfair-incubator/forker/actions) to view runs of this action!  ✅
