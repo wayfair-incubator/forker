@@ -25,28 +25,28 @@ jobs:
 # Integration tests temporarily disabled while token access issue is diagnosed
 ##############################################################################
 
-  # test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: ./
-  #       name: "🚀 test github user workflow"
-  #       with:
-  #         path: ./
-  #         token: ${{ secrets.ACCESS_TOKEN }}
-  #         ref: ${{ github.event.pull_request.head.sha }}
-  #         repo: tremor-runtime
-  #         owner: tremor-rs
-  #         user: lelia
-  #     - uses: ./
-  #       name: "🌎 test github org workflow"
-  #       with:
-  #         path: ./
-  #         token: ${{ secrets.ACCESS_TOKEN }}
-  #         ref: ${{ github.event.pull_request.head.sha }}
-  #         licenseAllowlist: "0bsd\napache-2.0\nmit"
-  #         repo: roadie-backstage-plugins
-  #         owner: RoadieHQ
-  #         org: wayfair-contribs
-  #         user: lelia
-  #         addUser: true
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        name: "🚀 test github user workflow"
+        with:
+          path: ./
+          token: ${{ secrets.DROWE_ACCESS_TOKEN }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          repo: tremor-runtime
+          owner: tremor-rs
+          user: lelia
+      - uses: ./
+        name: "🌎 test github org workflow"
+        with:
+          path: ./
+          token: ${{ secrets.OSPO_TOKEN }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          licenseAllowlist: "0bsd\napache-2.0\nmit"
+          repo: roadie-backstage-plugins
+          owner: RoadieHQ
+          org: wayfair-contribs
+          user: lelia
+          addUser: true
