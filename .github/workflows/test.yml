@@ -1,4 +1,4 @@
-name: tests
+name: Tests
 
 on: # Rebuild any PRs and main branch changes
 
