@@ -2,6 +2,7 @@ name: Tests
 
 on: # Rebuild any PRs and main branch changes
 
+  pull_request_target:
   pull_request:
   push:
     branches:
@@ -33,7 +34,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           repo: tremor-runtime
           owner: tremor-rs
-          user: lelia
+          user: lhasa-ospo
       - name: "🌎 test github org workflow"
         uses: ./
         with:
@@ -44,5 +45,5 @@ jobs:
           repo: roadie-backstage-plugins
           owner: RoadieHQ
           org: wayfair-contribs
-          user: lelia
+          user: lhasa-ospo
           addUser: true
