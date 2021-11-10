@@ -2,11 +2,10 @@ name: Tests
 
 on: # Rebuild any PRs and main branch changes
 
-  pull_request_target:
-  pull_request:
   push:
     branches:
       - main
+  pull_request_target:
 
 jobs:
 
