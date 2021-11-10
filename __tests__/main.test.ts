@@ -5,7 +5,7 @@ test('action throws error without required inputs', async () => {
   delete process.env[`INPUT_REPO`]
   try {
     await run()
-  } catch (err) {
+  } catch (err: any) {
     expect(err).toEqual(new Error('Input required and not supplied: owner'))
   }
 })

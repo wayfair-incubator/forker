@@ -34,7 +34,7 @@ export async function forkRepo(
       }
       core.info(`🎉 Forked repository now available at: ${res.data.html_url}`)
     }
-  } catch (err) {
+  } catch (err: any) {
     if (err.status === 403) {
       core.setFailed(
         `🚨 Insufficient permission to fork repository: ${err.message}`
@@ -63,7 +63,7 @@ export async function getOrgMembership(
       )
       return ''
     }
-  } catch (err) {
+  } catch (err: any) {
     if (err.status === 404) {
       core.debug(`User ${user} not found in ${org} organization`)
     } else if (err.status === 302) {
@@ -94,7 +94,7 @@ export async function getRepoLicense(
       core.setFailed(`🚨 Failed to retrieve license for repository: ${repo}`)
       return ''
     }
-  } catch (err) {
+  } catch (err: any) {
     core.setFailed(
       `🚨 Failed to retrieve license for repository: ${err.message}`
     )
@@ -113,7 +113,7 @@ export async function getUserId(user: string): Promise<number> {
       core.setFailed(`🚨 Failed to retrieve ID for user: ${user}`)
       return -1
     }
-  } catch (err) {
+  } catch (err: any) {
     core.setFailed(`🚨 Failed to retrieve user ID for user: ${err.message}`)
     return -1
   }
@@ -133,7 +133,7 @@ export async function inviteMember(org: string, user: string): Promise<void> {
       core.debug(`Unable to validate invitation`)
       core.setFailed(`🚨 Failed to invite user to org: ${org}`)
     }
-  } catch (err) {
+  } catch (err: any) {
     core.setFailed(`🚨 Failed to invite user to org: ${err.message}`)
   }
 }
