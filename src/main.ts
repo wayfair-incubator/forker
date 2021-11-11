@@ -49,8 +49,10 @@ export async function run(): Promise<void> {
         inviteMember(org, user)
       }
     }
-  } catch (err: any) {
-    core.setFailed(`🚨 Failed to create repository fork: ${err.message}`)
+  } catch (err) {
+    core.setFailed(
+      `🚨 Failed to create repository fork: ${(err as Error).message}`
+    )
   }
 }
 

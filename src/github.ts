@@ -34,10 +34,10 @@ export async function forkRepo(
       }
       core.info(`🎉 Forked repository now available at: ${res.data.html_url}`)
     }
-  } catch (err: any) {
+  } catch (err) {
     if (err.status === 403) {
       core.setFailed(
-        `🚨 Insufficient permission to fork repository: ${err.message}`
+        `🚨 Insufficient permission to fork repository: ${(err as Error).message}`
       )
     } else {
       core.setFailed(`🚨 Failed to create fork of repository: ${repo}`)
@@ -63,16 +63,16 @@ export async function getOrgMembership(
       )
       return ''
     }
-  } catch (err: any) {
+  } catch (err) {
     if (err.status === 404) {
       core.debug(`User ${user} not found in ${org} organization`)
     } else if (err.status === 302) {
       core.setFailed(
-        `🚨 Requester not a member of organization: ${err.message}`
+        `🚨 Requester not a member of organization: ${(err as Error).message}`
       )
     } else {
       core.setFailed(
-        `🚨 Failed to retrieve membership status for user: ${err.message}`
+        `🚨 Failed to retrieve membership status for user: ${(err as Error).message}`
       )
     }
     return ''
@@ -94,9 +94,9 @@ export async function getRepoLicense(
       core.setFailed(`🚨 Failed to retrieve license for repository: ${repo}`)
       return ''
     }
-  } catch (err: any) {
+  } catch (err) {
     core.setFailed(
-      `🚨 Failed to retrieve license for repository: ${err.message}`
+      `🚨 Failed to retrieve license for repository: ${(err as Error).message}`
     )
     return ''
   }
@@ -113,8 +113,8 @@ export async function getUserId(user: string): Promise<number> {
       core.setFailed(`🚨 Failed to retrieve ID for user: ${user}`)
       return -1
     }
-  } catch (err: any) {
-    core.setFailed(`🚨 Failed to retrieve user ID for user: ${err.message}`)
+  } catch (err) {
+    core.setFailed(`🚨 Failed to retrieve user ID for user: ${(err as Error).message}`)
     return -1
   }
 }
@@ -133,8 +133,8 @@ export async function inviteMember(org: string, user: string): Promise<void> {
       core.debug(`Unable to validate invitation`)
       core.setFailed(`🚨 Failed to invite user to org: ${org}`)
     }
-  } catch (err: any) {
-    core.setFailed(`🚨 Failed to invite user to org: ${err.message}`)
+  } catch (err) {
+    core.setFailed(`🚨 Failed to invite user to org: ${(err as Error).message}`)
   }
 }
 
