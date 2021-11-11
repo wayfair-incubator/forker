@@ -14,10 +14,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: "🛠 run npm build"
-      uses: ./
-      with:
-        path: ./
-        ref: ${{ github.event.pull_request.head.sha }}
+      # uses: ./
+      # with:
+      #   path: ./
+      #   ref: ${{ github.event.pull_request.head.sha }}
       run: |
         npm install
         npm run all
