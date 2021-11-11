@@ -4,7 +4,6 @@ on: # Rebuild any PRs and main branch changes
   push:
     branches:
       - main
-  # pull_request_target:
   pull_request:
 
 jobs:
@@ -13,18 +12,8 @@ jobs:
     env:
       INPUT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-    - uses: actions/checkout@v2
     - name: "🛠 run npm build"
-      # uses: ./
-      with:
-        ref: ${{ github.event.pull_request.head.sha }}
+      uses: actions/checkout@v2
       run: |
         npm install
         npm run all
-      # with:
-      #   ref: ${{ github.event.pull_request.head.sha }}
-      #   name: "🛠 run npm build"
-      #   run: |
-      #     npm install
-      # - run: |
-      #     npm run all
