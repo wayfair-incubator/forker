@@ -4,7 +4,7 @@ on: # Rebuild any PRs and main branch changes
   push:
     branches:
       - main
-  pull_request:
+  pull_request_target:
 
 jobs:
   build:
