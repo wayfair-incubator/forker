@@ -7,6 +7,17 @@ on: # Rebuild any PRs and main branch changes
   pull_request_target:
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      INPUT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+        name: "🛠 run npm build"
+      - run: |
+          npm install
+      - run: |
+          npm run all
   test:
     runs-on: ubuntu-latest
     steps:
