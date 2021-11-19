@@ -1,8 +1,8 @@
 # ⑂ forker
 
-[![Version](https://img.shields.io/badge/Version-0.0.2-7F187F.svg)](https://github.com/wayfair-incubator/forker/releases)
-[![License: MIT](https://img.shields.io/badge/License-MIT-7462E0.svg)](LICENSE)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-24B8EE.svg)](CODE_OF_CONDUCT.md)
+[![Release](https://img.shields.io/github/v/release/wayfair-incubator/forker?display_name=tag)](https://github.com/wayfair-incubator/forker/releases)
+[![License: MIT](https://img.shields.io/badge/license-MIT-7F187F.svg)](LICENSE)
+[![Code of Conduct](https://img.shields.io/badge/CoC-2.0-24B8EE.svg)](CODE_OF_CONDUCT.md)
 [![Tests](https://github.com/wayfair-incubator/forker/actions/workflows/test.yml/badge.svg)](https://github.com/wayfair-incubator/forker/actions/workflows/test.yml)
 
 GitHub action to automate fork creation. This action uses [octokit.js](https://github.com/octokit/octokit.js) and the [GitHub API](https://docs.github.com/en/rest) to automatically create a repository fork, either in your personal namespace or an organization you administer.
