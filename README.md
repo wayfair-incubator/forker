@@ -5,7 +5,7 @@
 [![Code of Conduct](https://img.shields.io/badge/CoC-2.0-24B8EE.svg)](CODE_OF_CONDUCT.md)
 [![Tests](https://github.com/wayfair-incubator/forker/actions/workflows/test.yml/badge.svg)](https://github.com/wayfair-incubator/forker/actions/workflows/test.yml)
 
-GitHub action to automate fork creation. This action uses [octokit.js](https://github.com/octokit/octokit.js) and the [GitHub API](https://docs.github.com/en/rest) to automatically create a repository fork, either in your personal namespace or an organization you administer.
+[GitHub Action](https://github.com/features/actions) to automate fork creation. This action uses [octokit.js](https://github.com/octokit/octokit.js) and the [GitHub API](https://docs.github.com/en/rest) to automatically create a repository fork, either in your personal namespace or an organization you administer.
 
 Before forking a repository into an organization, `forker` will check membership and outside collaborator status for the user requesting the fork. When the `addUser` option is enabled, `forker` will automatically invite the specified `user` to become a member of the organization where the fork has been requested.
 
@@ -174,7 +174,7 @@ See the [Actions tab](https://github.com/wayfair-incubator/forker/actions) to vi
 
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**. For detailed contributing guidelines, please see [CONTRIBUTING.md](CONTRIBUTING.md)
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**. For detailed contributing guidelines, please see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
@@ -182,5 +182,6 @@ Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
 
 ## Acknowledgements
 
-This template was adapted from [https://github.com/wayfair-incubator/oss-template](https://github.com/wayfair-incubator/oss-template) and
-[https://github.com/othneildrew/Best-README-Template](https://github.com/othneildrew/Best-README-Template).
+This [GitHub Action](https://github.com/features/actions) was adapted from the [typescript-action](https://github.com/actions/typescript-action) template, with additional [project content](https://github.com/wayfair-incubator/oss-template) curated with 💜 by [Wayfair](https://github.com/wayfair).
+
+For more information about Wayfair's [Open Source Program Office](https://www.linuxfoundation.org/tools/creating-an-open-source-program/), check out [**wayfair.github.io**](https://wayfair.github.io/) 🎉
