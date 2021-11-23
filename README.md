@@ -171,3 +171,16 @@ with:
 ```
 
 See the [Actions tab](https://github.com/wayfair-incubator/forker/actions) to view runs of this action!  ✅
+
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**. For detailed contributing guidelines, please see [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## License
+
+Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
+
+## Acknowledgements
+
+This template was adapted from [https://github.com/wayfair-incubator/oss-template](https://github.com/wayfair-incubator/oss-template) and
+[https://github.com/othneildrew/Best-README-Template](https://github.com/othneildrew/Best-README-Template).
