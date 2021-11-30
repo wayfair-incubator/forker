@@ -1,4 +1,5 @@
 import * as core from '@actions/core'
+import {HTTP} from './const'
 import {Octokit} from '@octokit/rest'
 
 const token: string = core.getInput('token', {required: true})
@@ -17,7 +18,7 @@ export async function forkRepo(
     })
     // Forks requests are still 'Accepted' (202) if the repository already exists at the specified location
     // However, repositories with the same name but a different source are auto-incremented (eg. my-forked-repo-1)
-    if (res.status === 202) {
+    if (res.status === HTTP.ACCEPTED) {
       // Regex to determine whether the repository ends with a dash and a number
       const regex = /-\d+$/
       const url = res.data.html_url
@@ -35,7 +36,7 @@ export async function forkRepo(
       core.info(`🎉 Forked repository now available at: ${res.data.html_url}`)
     }
   } catch (err: any) {
-    if (err.status === 403) {
+    if (err.status === HTTP.FORBIDDEN) {
       core.setFailed(
         `🚨 Insufficient permission to fork repository: ${
           (err as Error).message
@@ -57,7 +58,7 @@ export async function getOrgMembership(
       username: user
     })
     // @ts-expect-error only return membership URL if response code is 204
-    if (res.status === 204) {
+    if (res.status === HTTP.NO_CONTENT) {
       return res.url
     } else {
       core.setFailed(
@@ -66,9 +67,9 @@ export async function getOrgMembership(
       return ''
     }
   } catch (err: any) {
-    if (err.status === 404) {
+    if (err.status === HTTP.NOT_FOUND) {
       core.debug(`User ${user} not found in ${org} organization`)
-    } else if (err.status === 302) {
+    } else if (err.status === HTTP.FOUND) {
       core.setFailed(
         `🚨 Requester not a member of organization: ${(err as Error).message}`
       )
@@ -92,7 +93,7 @@ export async function getRepoLicense(
       owner,
       repo
     })
-    if (res.status === 200 && res.data.license !== null) {
+    if (res.status === HTTP.OK && res.data.license !== null) {
       return res.data.license.key
     } else {
       core.setFailed(`🚨 Failed to retrieve license for repository: ${repo}`)
@@ -111,7 +112,7 @@ export async function getUserId(user: string): Promise<number> {
     const res = await octokit.request('GET /users/{username}', {
       username: user
     })
-    if (res.status === 200) {
+    if (res.status === HTTP.OK) {
       return res.data.id
     } else {
       core.setFailed(`🚨 Failed to retrieve ID for user: ${user}`)
@@ -133,7 +134,7 @@ export async function inviteMember(org: string, user: string): Promise<void> {
       org,
       invitee_id: id
     })
-    if (res.status === 201) {
+    if (res.status === HTTP.CREATED) {
       core.debug(`User successfully invited`)
     } else {
       core.debug(`Unable to validate invitation`)
