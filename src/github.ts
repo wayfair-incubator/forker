@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
-import {Octokit} from '@octokit/rest'
 import {HTTP} from './const'
+import {Octokit} from '@octokit/rest'
 
 const token: string = core.getInput('token', {required: true})
 const octokit = new Octokit({auth: token})
