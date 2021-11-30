@@ -113,27 +113,27 @@ with:
 
 > 💡 **Tip:** Please use [node](https://nodejs.org/en/download/releases/) v9.x or later, as well as an npm-compatible version of [typescript](https://www.npmjs.com/package/typescript).
 
-Install the dependencies
+Install the node dependencies:
 
 ```bash
 npm install
 ```
 
-Build the typescript and package it for distribution
+Build the TypeScript code and package it for distribution:
 
 ```bash
 npm run build && npm run package
 ```
 
-Run the tests ✅
+Run the Jest unit tests:
+
+> 💡 **Note:** Before running any tests locally which require authenticating against the GitHub API, please ensure you've defined a valid token for the environment variable `INPUT_TOKEN` in your preferred shell (or shell profile), eg: `export INPUT_TOKEN="my_github_api_token_value"`. This is functionally equivalent to defining an input value for the `token` parameter in your GitHub Action's [workflow YAML](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions) configuration.
 
 ```bash
 $ npm test
 
- PASS  ./index.test.js
-  ✓ throws invalid number (3ms)
-  ✓ wait 500 ms (504ms)
-  ✓ test runs (95ms)
+ PASS  __tests__/main.test.ts
+  ✓ action throws error without required inputs (2 ms)
 ```
 
 ### Publishing
