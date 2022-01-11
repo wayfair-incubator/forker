@@ -17,4 +17,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Initial release and publication of the `Forker` Github Action
+- Initial [release](https://github.com/wayfair-incubator/forker/releases/tag/v0.0.1) of `forker` and [publication](https://github.com/marketplace/actions/github-forker) on the Github Action marketplace
