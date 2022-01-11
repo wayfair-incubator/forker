@@ -12,6 +12,7 @@ jobs:
     env:
       INPUT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       INPUT_OWNER: tremor-rs
+      INPUT_REPO: tremor-runtime
     steps:
       - uses: actions/checkout@v2
         name: "🛠 run npm build"
