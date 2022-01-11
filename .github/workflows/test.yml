@@ -19,8 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: "🛠 run npm build"
-      - run: |
-          npm run all
+      - run: npm run all
   test:
     runs-on: ubuntu-latest
     steps:
