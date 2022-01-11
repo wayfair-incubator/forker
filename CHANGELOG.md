@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Missing content from Wayfair's official [OSS Template](https://github.com/wayfair-incubator/oss-template)
 - Dynamic release badging system for [README](https://github.com/wayfair-incubator/forker/blob/main/README.md)
-- Linting configuration for all markdown files, including local development and Github workflow
+- Linting configuration for all markdown files, including local and [CI](https://github.com/wayfair-incubator/forker/actions/workflows/lint.yml)
 - Several major `npm` package upgrades suggested by Dependabot
 
 ### Changed
