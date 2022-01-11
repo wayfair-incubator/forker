@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       INPUT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      INPUT_OWNER: tremor-rs
     steps:
       - uses: actions/checkout@v2
         name: "🛠 run npm build"
