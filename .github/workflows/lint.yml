@@ -6,10 +6,9 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    - name: Check out code
-      uses: actions/checkout@v2
-    - name: Lint Markdown files
-      uses: avto-dev/markdown-lint@v1
-      with:
-        config: '.markdownlint.json'
-        args: '**/*.md .github/**/*.md'
+      - uses: actions/checkout@v2
+      - name: 🧹 lint
+        uses: avto-dev/markdown-lint@v1
+        with:
+          config: '.markdownlint.json'
+          args: '**/*.md .github/**/*.md'
