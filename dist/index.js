@@ -49,6 +49,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isValidLicense = exports.isOrgMember = exports.inviteMember = exports.getUserId = exports.getRepoLicense = exports.getOrgMembership = exports.forkRepo = void 0;
 const core = __importStar(__nccwpck_require__(2186));
+const const_1 = __nccwpck_require__(6695);
 const rest_1 = __nccwpck_require__(5375);
 const token = core.getInput('token', { required: true });
 const octokit = new rest_1.Octokit({ auth: token });
@@ -5293,7 +5294,7 @@ Object.defineProperty(Response.prototype, Symbol.toStringTag, {
 });
 
 const INTERNALS$2 = Symbol('Request internals');
-const URL = whatwgUrl.URL;
+const URL = Url.URL || whatwgUrl.URL;
 
 // fix an issue where "format", "parse" aren't a named export for node <10
 const parse_url = Url.parse;
