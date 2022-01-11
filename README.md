@@ -70,10 +70,10 @@ A newline-delimited (`"\n"`) string representing a list of allowed [license keys
 
 ### Typical
 
-In most cases, you'll want to use the latest stable version (eg. `v0.0.2`):
+In most cases, you'll want to use the latest stable version (eg. `v0.0.3`):
 
 ```yaml
-uses: wayfair-incubator/forker@v0.0.2
+uses: wayfair-incubator/forker@v0.0.3
 with:
   token: ${{ secrets.ACCESS_TOKEN }}
   repo: tremor-runtime
@@ -99,7 +99,7 @@ with:
 If you are automating forking on behalf of a GitHub organization, you may wish to leverage the optional `addUser` and `licenseAllowlist` params:
 
 ```yaml
-uses: wayfair-incubator/forker@v0.0.2
+uses: wayfair-incubator/forker@v0.0.3
 with:
   token: ${{ secrets.ACCESS_TOKEN }}
   repo: tremor-runtime
@@ -147,7 +147,7 @@ Then run [ncc](https://github.com/zeit/ncc) and push the results:
 npm run package
 git add dist
 git commit -a -m "prod dependencies"
-git push origin releases/v0.0.2
+git push origin releases/v0.0.3
 ```
 
 > 💡 **Note:** We recommend using the `--license` option for `ncc`, which will create a license file for all of the production node modules used in your project.
