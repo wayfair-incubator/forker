@@ -16,11 +16,9 @@ jobs:
       INPUT_ADDUSER: false
     steps:
       - uses: actions/checkout@v2
-        name: "🛠 run npm build - TEST"
+        name: "🛠 run npm build"
       - run: |
           npm run all
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
   test:
     runs-on: ubuntu-latest
     steps:
