@@ -6,12 +6,13 @@
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc --skipLibCheck",
+    "clean": "npm clean-install",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",
     "package": "ncc build --source-map --license licenses.txt",
     "test": "jest --colors",
-    "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
+    "all": "npm run clean && npm run build && npm run format && npm run lint && npm run package && npm test"
   },
   "repository": {
     "type": "git",
@@ -31,9 +32,9 @@
   "devDependencies": {
     "@types/jest": "^27.0.3",
     "@types/node": "^16.11.10",
-    "@typescript-eslint/parser": "^4.33.0",
+    "@typescript-eslint/parser": "^5.9.1",
     "@vercel/ncc": "^0.32.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.1.0",
     "eslint-plugin-github": "^4.3.2",
     "eslint-plugin-jest": "^25.3.0",
     "jest": "^27.4.0",
