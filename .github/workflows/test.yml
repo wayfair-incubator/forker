@@ -15,7 +15,7 @@ jobs:
       INPUT_REPO: tremor-runtime
       INPUT_USER: lhasa-ospo
       INPUT_ADDUSER: false
-      INPUT_LICENSEALLOWLIST: []
+      INPUT_LICENSEALLOWLIST: "0bsd\napache-2.0\nmit"
     steps:
       - uses: actions/checkout@v2
         name: "🛠 run npm build"
