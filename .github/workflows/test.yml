@@ -10,15 +10,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      INPUT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      INPUT_TOKEN: ${{ secrets.ACCESS_TOKEN }}
       INPUT_OWNER: tremor-rs
       INPUT_REPO: tremor-runtime
+      INPUT_USER: lhasa-ospo
       INPUT_ADDUSER: false
+      INPUT_LICENSEALLOWLIST: "0bsd\napache-2.0\nmit"
     steps:
       - uses: actions/checkout@v2
         name: "🛠 run npm build"
-      - run: |
-          npm run all
+      - run: npm run all
   test:
     runs-on: ubuntu-latest
     steps:
