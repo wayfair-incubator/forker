@@ -1,6 +1,27 @@
 require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 6695:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+/* Named consts for GitHub API response codes as documented in https://docs.github.com/en/rest */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.HTTP = void 0;
+exports.HTTP = {
+    OK: 200,
+    CREATED: 201,
+    ACCEPTED: 202,
+    NO_CONTENT: 204,
+    FOUND: 302,
+    FORBIDDEN: 403,
+    NOT_FOUND: 404
+};
+
+
+/***/ }),
+
 /***/ 5928:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -40,7 +61,7 @@ async function forkRepo(owner, repo, org) {
         });
         // Forks requests are still 'Accepted' (202) if the repository already exists at the specified location
         // However, repositories with the same name but a different source are auto-incremented (eg. my-forked-repo-1)
-        if (res.status === 202) {
+        if (res.status === const_1.HTTP.ACCEPTED) {
             // Regex to determine whether the repository ends with a dash and a number
             const regex = /-\d+$/;
             const url = res.data.html_url;
@@ -53,7 +74,7 @@ async function forkRepo(owner, repo, org) {
         }
     }
     catch (err) {
-        if (err.status === 403) {
+        if (err.status === const_1.HTTP.FORBIDDEN) {
             core.setFailed(`🚨 Insufficient permission to fork repository: ${err.message}`);
         }
         else {
@@ -69,7 +90,7 @@ async function getOrgMembership(org, user) {
             username: user
         });
         // @ts-expect-error only return membership URL if response code is 204
-        if (res.status === 204) {
+        if (res.status === const_1.HTTP.NO_CONTENT) {
             return res.url;
         }
         else {
@@ -78,10 +99,10 @@ async function getOrgMembership(org, user) {
         }
     }
     catch (err) {
-        if (err.status === 404) {
+        if (err.status === const_1.HTTP.NOT_FOUND) {
             core.debug(`User ${user} not found in ${org} organization`);
         }
-        else if (err.status === 302) {
+        else if (err.status === const_1.HTTP.FOUND) {
             core.setFailed(`🚨 Requester not a member of organization: ${err.message}`);
         }
         else {
@@ -97,7 +118,7 @@ async function getRepoLicense(owner, repo) {
             owner,
             repo
         });
-        if (res.status === 200 && res.data.license !== null) {
+        if (res.status === const_1.HTTP.OK && res.data.license !== null) {
             return res.data.license.key;
         }
         else {
@@ -116,7 +137,7 @@ async function getUserId(user) {
         const res = await octokit.request('GET /users/{username}', {
             username: user
         });
-        if (res.status === 200) {
+        if (res.status === const_1.HTTP.OK) {
             return res.data.id;
         }
         else {
@@ -138,7 +159,7 @@ async function inviteMember(org, user) {
             org,
             invitee_id: id
         });
-        if (res.status === 201) {
+        if (res.status === const_1.HTTP.CREATED) {
             core.debug(`User successfully invited`);
         }
         else {
