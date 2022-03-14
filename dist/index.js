@@ -234,7 +234,9 @@ async function run() {
                 core.info(`✅ Valid license, proceeding with fork creation`);
             }
             else {
-                core.setFailed(`🚨 License not found in whitelist, please check to ensure the repository is compliant`);
+                core.setFailed(`🚨 License not found in whitelist, please check to ensure the repository is compliant???`);
+                return;
+                // throw new Error("Invalid license!")
             }
         }
         // Fork the specified repo into user namespace, unless an organization is specified
