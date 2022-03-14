@@ -26,7 +26,8 @@ export async function run(): Promise<void> {
         core.setFailed(
           `🚨 License not found in whitelist, please check to ensure the repository is compliant???`
         )
-        throw new Error("Invalid license!")
+        return
+        // throw new Error("Invalid license!")
       }
     }
 
