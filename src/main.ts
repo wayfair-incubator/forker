@@ -24,9 +24,9 @@ export async function run(): Promise<void> {
         core.info(`✅ Valid license, proceeding with fork creation`)
       } else {
         core.setFailed(
-          `🚨 License not found in whitelist, please check to ensure the repository is compliant`
+          `🚨 License not found in whitelist, please check to ensure the repository is compliant???`
         )
-        throw new Error("Invalid license")
+        throw new Error("Invalid license!")
       }
     }
 
