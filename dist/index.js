@@ -258,7 +258,7 @@ async function run() {
         core.info(`⑂ Creating fork of repository ${repo}...`);
         await (0, github_1.forkRepo)(owner, repo, org);
         // Optionally check org membership status for a specified user, and invite if missing
-        if (addUser && org && typeof user !== 'undefined') {
+        if (addUser && typeof org !== 'undefined' && typeof user !== 'undefined') {
             core.info(`🔍 Checking membership status of user ${user} in ${org} organization...`);
             if (await (0, github_1.isOrgMember)(org, user)) {
                 core.info(`✅ User ${user} already a member of ${org}, no action needed`);
