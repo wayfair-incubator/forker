@@ -120,7 +120,14 @@ async function getRepoLicense(owner, repo) {
             repo
         });
         if (res.status === const_1.HTTP.OK && res.data.license !== null) {
-            return res.data.license.key;
+            const licenseKey = res.data.license.key;
+            if (licenseKey === 'other') {
+                core.setFailed(`🚨 Failed to detect a valid LICENSE file for repository: ${repo}`);
+                return '';
+            }
+            else {
+                return licenseKey;
+            }
         }
         else {
             core.setFailed(`🚨 Failed to retrieve license for repository: ${repo}`);
@@ -175,13 +182,13 @@ async function inviteMember(org, user) {
 exports.inviteMember = inviteMember;
 async function isOrgMember(org, user) {
     const orgMembership = await getOrgMembership(org, user);
-    core.debug(`Got org membership: ${orgMembership}`);
+    core.debug(`Got organization membership: ${orgMembership}`);
     return orgMembership ? true : false;
 }
 exports.isOrgMember = isOrgMember;
 async function isValidLicense(owner, repo, whitelist) {
     const repoLicense = await getRepoLicense(owner, repo);
-    core.debug(`Got license: ${repoLicense}`);
+    core.debug(`Got repository license: ${repoLicense}`);
     return whitelist.includes(repoLicense);
 }
 exports.isValidLicense = isValidLicense;
@@ -234,7 +241,9 @@ async function run() {
                 core.info(`✅ Valid license, proceeding with fork creation`);
             }
             else {
-                core.setFailed(`🚨 License not found in whitelist, please check to ensure the repository is compliant`);
+                core.setFailed(`🚨 License not found in whitelist, please check to ensure the repository is compliant!`);
+                // Do not proceed with fork creation if license compliance check fails
+                return;
             }
         }
         // Fork the specified repo into user namespace, unless an organization is specified
