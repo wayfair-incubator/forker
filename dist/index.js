@@ -120,6 +120,7 @@ async function getRepoLicense(owner, repo) {
             repo
         });
         if (res.status === const_1.HTTP.OK && res.data.license !== null) {
+            core.debug(`License data: ${res.data.license}`);
             return res.data.license.key;
         }
         else {
