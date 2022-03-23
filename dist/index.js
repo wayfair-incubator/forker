@@ -258,7 +258,7 @@ async function run() {
         core.info(`⑂ Creating fork of repository ${repo}...`);
         await (0, github_1.forkRepo)(owner, repo, org);
         // Optionally check org membership status for a specified user, and invite if missing
-        if (addUser && typeof org !== 'undefined' && typeof user !== 'undefined') {
+        if (addUser && org && typeof user !== 'undefined') {
             core.debug(`Got value for org: "${org}"`);
             core.info(`🔍 Checking membership status of user ${user} in ${org} organization...`);
             if (await (0, github_1.isOrgMember)(org, user)) {
@@ -268,6 +268,9 @@ async function run() {
                 core.info(`📥 Inviting user ${user} to ${org} org, make sure they check their inbox!`);
                 (0, github_1.inviteMember)(org, user);
             }
+        }
+        else {
+            core.debug(`Got no value for org, skipping invite`);
         }
     }
     catch (err) {
