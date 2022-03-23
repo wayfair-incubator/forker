@@ -17,13 +17,13 @@ jobs:
       INPUT_ADDUSER: false
       INPUT_LICENSEALLOWLIST: "0bsd\napache-2.0\nbsd-2-clause\nbsd-3-clause\nmit"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         name: "🛠 run npm build"
       - run: npm run all
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: "🚀 test github user workflow"
         uses: ./
         with:
