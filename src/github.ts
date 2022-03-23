@@ -94,9 +94,15 @@ export async function getRepoLicense(
       repo
     })
     if (res.status === HTTP.OK && res.data.license !== null) {
-      const licenseData = JSON.stringify(res.data.license)
-      core.debug(`License data: ${licenseData}`)
-      return res.data.license.key
+      const licenseKey = res.data.license.key
+      if (licenseKey === 'other') {
+        core.setFailed(
+          `🚨 Failed to detect a valid LICENSE file for repository: ${repo}`
+        )
+        return ''
+      } else {
+        return licenseKey
+      }
     } else {
       core.setFailed(`🚨 Failed to retrieve license for repository: ${repo}`)
       return ''
@@ -149,7 +155,7 @@ export async function inviteMember(org: string, user: string): Promise<void> {
 
 export async function isOrgMember(org: string, user: string): Promise<boolean> {
   const orgMembership = await getOrgMembership(org, user)
-  core.debug(`Got org membership: ${orgMembership}`)
+  core.debug(`Got organization membership: ${orgMembership}`)
   return orgMembership ? true : false
 }
 
@@ -159,6 +165,6 @@ export async function isValidLicense(
   whitelist: string[]
 ): Promise<boolean> {
   const repoLicense = await getRepoLicense(owner, repo)
-  core.debug(`Got license: ${repoLicense}`)
+  core.debug(`Got repository license: ${repoLicense}`)
   return whitelist.includes(repoLicense)
 }
