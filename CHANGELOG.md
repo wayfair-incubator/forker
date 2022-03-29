@@ -9,9 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-### Changed
+- Numerous Dependabot dependency vulnerabilities and recommended upgrades
 
-### Fixeed
+### Fixed
+
+- Bug with license compliance check failing when the license format is invalid
+- Edge case where Github were invited when no organization was specified
 
 ## [0.0.3] - 2022-01-11
 
