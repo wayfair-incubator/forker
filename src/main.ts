@@ -36,7 +36,7 @@ export async function run(): Promise<void> {
     await forkRepo(owner, repo, org)
 
     // Optionally check org membership status for a specified user, and invite if missing
-    if (addUser && typeof user !== 'undefined') {
+    if (addUser && org && typeof user !== 'undefined') {
       core.info(
         `🔍 Checking membership status of user ${user} in ${org} organization...`
       )
