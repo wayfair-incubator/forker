@@ -37,7 +37,6 @@ export async function run(): Promise<void> {
 
     // Optionally check org membership status for a specified user, and invite if missing
     if (addUser && org && typeof user !== 'undefined') {
-      core.debug(`Got value for org: "${org}"`)
       core.info(
         `🔍 Checking membership status of user ${user} in ${org} organization...`
       )
@@ -51,8 +50,6 @@ export async function run(): Promise<void> {
         )
         inviteMember(org, user)
       }
-    } else {
-      core.debug(`Got no value for org, skipping invite`)
     }
   } catch (err) {
     core.setFailed(
