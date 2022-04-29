@@ -7,8 +7,8 @@ updates:
     directory: '/'
     # Check the npm registry for updates every day (weekdays)
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
