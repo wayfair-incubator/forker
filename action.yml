@@ -28,6 +28,9 @@ inputs:
     description: 'List of allowed licenses for repository being forked'
     required: false
     default: 'undefined'
+outputs:
+  forkUrl:
+    description: 'The URL of the forked repository'
 runs:
   using: 'node12'
   main: 'dist/index.js'

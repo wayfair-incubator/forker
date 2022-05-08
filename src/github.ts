@@ -34,7 +34,7 @@ export async function forkRepo(
         )
       }
       core.info(`🎉 Forked repository now available at: ${url}`)
-      core.setOutput('fork_url', url)
+      core.setOutput('forkUrl', url)
     }
   } catch (err: any) {
     if (err.status === HTTP.FORBIDDEN) {
