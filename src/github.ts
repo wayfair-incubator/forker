@@ -33,7 +33,8 @@ export async function forkRepo(
           `If this was not intentional, please check for exisiting repositories on your Github account or organization!\n`
         )
       }
-      core.info(`🎉 Forked repository now available at: ${res.data.html_url}`)
+      core.info(`🎉 Forked repository now available at: ${url}`)
+      core.setOutput('fork_url', url)
     }
   } catch (err: any) {
     if (err.status === HTTP.FORBIDDEN) {

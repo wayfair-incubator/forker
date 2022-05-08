@@ -23,7 +23,7 @@ inputs:
   addUser:
     description: 'Add GitHub user to organization if missing'
     required: false
-    default: false
+    default: 'false'
   licenseAllowlist:
     description: 'List of allowed licenses for repository being forked'
     required: false
