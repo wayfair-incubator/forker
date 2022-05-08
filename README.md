@@ -72,6 +72,8 @@ A newline-delimited (`"\n"`) string representing a list of allowed [license keys
 
 A string representing the HTTPS URL of the newly-forked repository.
 
+**Example:** `"https://github.com/wayfair-contribs/tremor-runtime"`
+
 ## Usage
 
 ### Typical
