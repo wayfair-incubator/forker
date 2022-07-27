@@ -17,9 +17,6 @@
   ],
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch", "pin"]
-    },
-    {
       "matchPackageNames": ["jest", "ts-jest", "@types/jest"],
       "matchPackagePrefixes": ["jest-"],
       "groupName": "Jest"
