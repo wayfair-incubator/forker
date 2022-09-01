@@ -8,6 +8,7 @@
 
 [GitHub Action](https://github.com/features/actions) to automate fork creation. This action uses [octokit.js](https://github.com/octokit/octokit.js) and the [GitHub API](https://docs.github.com/en/rest) to automatically create a repository fork, either in your personal namespace or an organization you administer.
 
+# CHANGEME
 Before forking a repository into an organization, `forker` will check membership and outside collaborator status for the user requesting the fork. When the `addUser` option is enabled, `forker` will automatically invite the specified `user` to become a member of the organization where the fork has been requested.
 
 For legal and compliance reasons, organizations or individuals can choose to provide an optional `licenseAllowlist` to compare against the [license of the repository](https://docs.github.com/en/rest/reference/licenses) being forked. If the license key returned by the GitHub API is not found within the provided allowlist, `forker` will exit without forking the repository.
@@ -48,6 +49,7 @@ The GitHub account for the person requesting the fork.
 
 **Example:** `lelia`
 
+# CHANGEME
 ### `addUser` (boolean, optional)
 
 When used in combination with the `org` and `user` inputs, the `addUser` option will automatically invite a specified GitHub user to the destination organization if they are not already a member.
@@ -96,6 +98,7 @@ with:
 
 ### Advanced
 
+# CHANGEME
 If you are automating forking on behalf of a GitHub organization, you may wish to leverage the optional `addUser` and `licenseAllowlist` params:
 
 ```yaml
