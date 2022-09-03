@@ -5,6 +5,45 @@ import {Octokit} from '@octokit/rest'
 const token: string = core.getInput('token', {required: true})
 const octokit = new Octokit({auth: token})
 
+export async function changeUserPermissions(
+  org: string,
+  repo: string,
+  user: string,
+  permission: string
+): Promise<void> {
+  try {
+    const res = await octokit.request('PUT /repos/{org}/{repo}/collaborators/{user}', {
+      org: org,
+      repo: repo,
+      user: user,
+      permission: permission
+    })
+    if (res.status === HTTP.CREATED) {
+      // TODO remove debug log
+      core.info(`${res.data}`)
+      core.debug(`New collaborator invitation created for user ${user}`)
+    } else if (res.status === HTTP.NO_CONTENT) {
+      // TODO remove debug log
+      core.info(`${res.data}`)
+      core.debug(`Existing member ${user} granted ${permission} permissions`)
+    }
+  } catch (err: any) {
+    if (err.status === HTTP.FORBIDDEN) {
+      core.debug(`Unable to apply ${permission} permissions for user ${user}`)
+    } else if (err.status === HTTP.VALIDATION_FAILED) {
+      core.setFailed(
+        `🚨 Unable to validate permissions for user ${user}: ${(err as Error).message}`
+      )
+    } else {
+      core.setFailed(
+        `🚨 Failed to apply ${permission} permissions for user ${user}: ${
+          (err as Error).message
+        }`
+      )
+    }
+  }
+}
+
 export async function forkRepo(
   owner: string,
   repo: string,
@@ -148,43 +187,4 @@ export async function isValidLicense(
   const repoLicense = await getRepoLicense(owner, repo)
   core.debug(`Got repository license: ${repoLicense}`)
   return whitelist.includes(repoLicense)
-}
-
-export async function promoteUser(
-  org: string,
-  repo: string,
-  user: string
-): Promise<void> {
-  const permission = 'admin'
-  try {
-    const res = await octokit.request('PUT /repos/{org}/{repo}/collaborators/{user}', {
-      org: org,
-      repo: repo,
-      user: user,
-      permission: permission
-    })
-    if (res.status === HTTP.CREATED) {
-      // TODO remove debug log
-      core.info(`${res.data}`)
-      core.debug(`New collaborator invitation created for user ${user}`)
-    } else if (res.status === HTTP.NO_CONTENT) {
-      // TODO remove debug log
-      core.info(`${res.data}`)
-      core.debug(`Existing member ${user} granted repository permissions`)
-    }
-  } catch (err: any) {
-    if (err.status === HTTP.FORBIDDEN) {
-      core.debug(`Unable to apply permissions for user ${user}`)
-    } else if (err.status === HTTP.VALIDATION_FAILED) {
-      core.setFailed(
-        `🚨 Unable to validate permissions for user ${user}: ${(err as Error).message}`
-      )
-    } else {
-      core.setFailed(
-        `🚨 Failed to apply permissions for user ${user}: ${
-          (err as Error).message
-        }`
-      )
-    }
-  }
 }
