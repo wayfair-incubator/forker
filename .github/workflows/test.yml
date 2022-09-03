@@ -14,7 +14,8 @@ jobs:
       INPUT_OWNER: tremor-rs
       INPUT_REPO: tremor-runtime
       INPUT_USER: lhasa-ospo
-      INPUT_ADDUSER: false
+      INPUT_CHECKUSER: false
+      INPUT_PROMOTEUSER: false
       INPUT_LICENSEALLOWLIST: "0bsd\napache-2.0\nbsd-2-clause\nbsd-3-clause\nmit"
     steps:
       - uses: actions/checkout@v3
@@ -44,4 +45,5 @@ jobs:
           owner: RoadieHQ
           org: wayfair-contribs
           user: lhasa-ospo
-          addUser: true
+          checkUser: true
+          promoteUser: true
