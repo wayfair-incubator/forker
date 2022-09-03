@@ -12,12 +12,15 @@ export async function changeUserPermissions(
   permission: string
 ): Promise<void> {
   try {
-    const res = await octokit.request('PUT /repos/{org}/{repo}/collaborators/{user}', {
-      org: org,
-      repo: repo,
-      user: user,
-      permission: permission
-    })
+    const res = await octokit.request(
+      'PUT /repos/{org}/{repo}/collaborators/{user}',
+      {
+        org: 'org',
+        repo: 'repo',
+        user: 'user',
+        permission: 'permission'
+      }
+    )
     if (res.status === HTTP.CREATED) {
       // TODO remove debug log
       core.info(`${res.data}`)
@@ -32,7 +35,9 @@ export async function changeUserPermissions(
       core.debug(`Unable to apply ${permission} permissions for user ${user}`)
     } else if (err.status === HTTP.VALIDATION_FAILED) {
       core.setFailed(
-        `🚨 Unable to validate permissions for user ${user}: ${(err as Error).message}`
+        `🚨 Unable to validate permissions for user ${user}: ${
+          (err as Error).message
+        }`
       )
     } else {
       core.setFailed(

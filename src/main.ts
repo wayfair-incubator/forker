@@ -1,14 +1,23 @@
 import * as core from '@actions/core'
-import { PERMISSIONS } from './const'
-import {changeUserPermissions, forkRepo, isOrgMember, isValidLicense} from './github'
+import {PERMISSIONS} from './const'
+import {
+  changeUserPermissions,
+  forkRepo,
+  isOrgMember,
+  isValidLicense
+} from './github'
 
 export async function run(): Promise<void> {
   const owner: string = core.getInput('owner', {required: true})
   const repo: string = core.getInput('repo', {required: true})
   const org: string = core.getInput('org', {required: false})
   const user: string = core.getInput('user', {required: false})
-  const checkUser: boolean = core.getBooleanInput('checkUser', {required: false})
-  const promoteUser: boolean = core.getBooleanInput('promoteUser', {required: false})
+  const checkUser: boolean = core.getBooleanInput('checkUser', {
+    required: false
+  })
+  const promoteUser: boolean = core.getBooleanInput('promoteUser', {
+    required: false
+  })
   const licenseAllowlist: string[] = core.getMultilineInput(
     'licenseAllowlist',
     {
@@ -44,7 +53,9 @@ export async function run(): Promise<void> {
           `✅ User ${user} is a member of ${org}, proceeding with fork request...`
         )
       } else {
-        core.setFailed(`🚨 User ${user} not a member of ${org}, please join the organization before trying again!`)
+        core.setFailed(
+          `🚨 User ${user} not a member of ${org}, please join the organization before trying again!`
+        )
       }
     }
 
