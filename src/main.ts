@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
 import { PERMISSIONS } from './const'
-import {forkRepo, isOrgMember, isValidLicense, promoteUser} from './github'
+import {changeUserPermissions, forkRepo, isOrgMember, isValidLicense} from './github'
 
 export async function run(): Promise<void> {
   const owner: string = core.getInput('owner', {required: true})
@@ -8,7 +8,7 @@ export async function run(): Promise<void> {
   const org: string = core.getInput('org', {required: false})
   const user: string = core.getInput('user', {required: false})
   const checkUser: boolean = core.getBooleanInput('checkUser', {required: false})
-  const addAdmin: boolean = core.getBooleanInput('addAdmin', {required: false})
+  const promoteUser: boolean = core.getBooleanInput('promoteUser', {required: false})
   const licenseAllowlist: string[] = core.getMultilineInput(
     'licenseAllowlist',
     {
@@ -53,11 +53,11 @@ export async function run(): Promise<void> {
     await forkRepo(owner, repo, org)
 
     // Optionally promote the requesting user's permissions to admin for the forked repository
-    if (addAdmin && org && typeof user !== 'undefined') {
+    if (promoteUser && org && typeof user !== 'undefined') {
       core.info(
         `⏫ Promoting user permissions for ${user} to ${PERMISSIONS.ADMIN}`
       )
-      promoteUser(org, repo, user)
+      changeUserPermissions(org, repo, user, PERMISSIONS.ADMIN)
     }
   } catch (err) {
     core.setFailed(
