@@ -7,5 +7,6 @@ export const HTTP = {
   NO_CONTENT: 204,
   FOUND: 302,
   FORBIDDEN: 403,
-  NOT_FOUND: 404
+  NOT_FOUND: 404,
+  VALIDATION_FAILED: 422
 } as const
