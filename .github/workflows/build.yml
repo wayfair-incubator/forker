@@ -1,4 +1,4 @@
-name: build + test changes
+name: build + test + lint changes
 
 on: # Rebuild any PRs and main branch changes
   push:
@@ -7,7 +7,26 @@ on: # Rebuild any PRs and main branch changes
   pull_request_target:
 
 jobs:
-  build:
+  lint-markdown:
+    if: ${{ ! github.event.pull_request.head.repo.fork }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: ⬇️ lint markdown files
+        uses: avto-dev/markdown-lint@v1
+        with:
+          config: '.markdownlint.json'
+          args: '**/*.md .github/**/*.md'
+  lint-renovate:
+    if: ${{ ! github.event.pull_request.head.repo.fork }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: 🧼 lint renovate config
+        uses: suzuki-shunsuke/github-action-renovate-config-validator@v0.1.2
+        with:
+          config_file_path: renovate.json
+  build-changes:
     if: ${{ ! github.event.pull_request.head.repo.fork }}
     runs-on: ubuntu-latest
     env:
@@ -22,7 +41,7 @@ jobs:
       - uses: actions/checkout@v3
         name: "🛠 run npm build"
       - run: npm run all
-  test:
+  test-changes:
     if: ${{ ! github.event.pull_request.head.repo.fork }}
     runs-on: ubuntu-latest
     steps:
