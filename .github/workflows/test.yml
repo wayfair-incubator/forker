@@ -5,9 +5,9 @@ on: # Rebuild any PRs and main branch changes
     branches:
       - main
   pull_request_target:
-    if: " ! github.event.pull_request.head.repo.fork "
+    if: ${{ ! github.event.pull_request.head.repo.fork }}
   pull_request:
-    if: " github.event.pull_request.head.repo.fork "
+    if: ${{ github.event.pull_request.head.repo.fork }}
 
 jobs:
   build:
