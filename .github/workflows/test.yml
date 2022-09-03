@@ -5,9 +5,9 @@ on: # Rebuild any PRs and main branch changes
     branches:
       - main
   pull_request_target:
-    if: pull_request.organization == 'wayfair-incubator'
+    if: ${{ github.event.pull_request.organization == 'wayfair-incubator' }}
   pull_request:
-    if: pull_request.organization != 'wayfair-incubator'
+    if: ${{ github.event.pull_request.organization != 'wayfair-incubator' }}
 
 jobs:
   build:
