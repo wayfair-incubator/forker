@@ -75,7 +75,7 @@ export async function getOrgMembership(
       )
     } else {
       core.setFailed(
-        `🚨 Failed to retrieve membership status for user: ${
+        `🚨 Failed to retrieve membership status for user ${user}: ${
           (err as Error).message
         }`
       )
@@ -134,25 +134,6 @@ export async function getUserId(user: string): Promise<number> {
   }
 }
 
-export async function inviteMember(org: string, user: string): Promise<void> {
-  const id = await getUserId(user)
-  core.debug(`Got user ID: ${id}`)
-  try {
-    const res = await octokit.request('POST /orgs/{org}/invitations', {
-      org,
-      invitee_id: id
-    })
-    if (res.status === HTTP.CREATED) {
-      core.debug(`User successfully invited`)
-    } else {
-      core.debug(`Unable to validate invitation`)
-      core.setFailed(`🚨 Failed to invite user to org: ${org}`)
-    }
-  } catch (err) {
-    core.setFailed(`🚨 Failed to invite user to org: ${(err as Error).message}`)
-  }
-}
-
 export async function isOrgMember(org: string, user: string): Promise<boolean> {
   const orgMembership = await getOrgMembership(org, user)
   core.debug(`Got organization membership: ${orgMembership}`)
@@ -167,4 +148,43 @@ export async function isValidLicense(
   const repoLicense = await getRepoLicense(owner, repo)
   core.debug(`Got repository license: ${repoLicense}`)
   return whitelist.includes(repoLicense)
+}
+
+export async function promoteUser(
+  org: string,
+  repo: string,
+  user: string
+): Promise<void> {
+  const permission = 'admin'
+  try {
+    const res = await octokit.request('PUT /repos/{org}/{repo}/collaborators/{user}', {
+      org: org,
+      repo: repo,
+      user: user,
+      permission: permission
+    })
+    if (res.status === HTTP.CREATED) {
+      // TODO remove debug log
+      core.info(`${res.data}`)
+      core.debug(`New collaborator invitation created for user ${user}`)
+    } else if (res.status === HTTP.NO_CONTENT) {
+      // TODO remove debug log
+      core.info(`${res.data}`)
+      core.debug(`Existing member ${user} granted repository permissions`)
+    }
+  } catch (err: any) {
+    if (err.status === HTTP.FORBIDDEN) {
+      core.debug(`Unable to apply permissions for user ${user}`)
+    } else if (err.status === HTTP.VALIDATION_FAILED) {
+      core.setFailed(
+        `🚨 Unable to validate permissions for user ${user}: ${(err as Error).message}`
+      )
+    } else {
+      core.setFailed(
+        `🚨 Failed to apply permissions for user ${user}: ${
+          (err as Error).message
+        }`
+      )
+    }
+  }
 }
