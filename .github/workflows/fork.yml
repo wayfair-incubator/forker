@@ -1,10 +1,27 @@
-name: build + test forks
+name: build + test + lint forks
 
 on: # Rebuild any PRs submitted by forks
   pull_request:
 
 jobs:
-  build:
+  lint-markdown:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: ⬇️ lint markdown files
+        uses: avto-dev/markdown-lint@v1
+        with:
+          config: '.markdownlint.json'
+          args: '**/*.md .github/**/*.md'
+  lint-renovate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: 🧼 lint renovate config
+        uses: suzuki-shunsuke/github-action-renovate-config-validator@v0.1.2
+        with:
+          config_file_path: renovate.json
+  build-fork:
     if: ${{ github.event.pull_request.head.repo.fork }}
     runs-on: ubuntu-latest
     env:
@@ -19,7 +36,7 @@ jobs:
       - uses: actions/checkout@v3
         name: "🛠 run npm build"
       - run: npm run all
-  test:
+  test-fork:
     if: ${{ github.event.pull_request.head.repo.fork }}
     runs-on: ubuntu-latest
     steps:
