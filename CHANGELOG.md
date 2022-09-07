@@ -5,11 +5,22 @@ All notable changes to `Forker` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.0.5] - TBA
+## [0.0.5] - 2022-09-07
+
+### Added
+
+- Support for enforcing existing membership in a specified GitHub organization (see `checkUser`)
+- Support for granting organization users `admin` permissions on the repository they wish to fork (see `promoteUser`)
 
 ### Changed
 
-- TBA
+- Updated Jest unit tests to validate all env inputs
+- Downgraded all Jest packages from v29 to v28 to resolve mismatch with `ts-jest`
+- Updated README to document new inputs (`checkuser`, `promoteUser`) and remove deprecated ones (`addUser`)
+
+### Removed
+
+- Support for sending GitHub organization invitations to users who were not already a member (see `addUser`)
 
 ## [0.0.4] - 2022-03-23
 
