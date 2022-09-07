@@ -11,6 +11,7 @@ export async function changeUserPermissions(
   user: string,
   permission: string
 ): Promise<void> {
+  core.info(`------ START changeUserPermissions --------`)
   try {
     const res = await octokit.request(
       'PUT /repos/{org}/{repo}/collaborators/{user}',
@@ -46,6 +47,7 @@ export async function changeUserPermissions(
       )
     }
   }
+  core.info(`------ END changeUserPermissions --------`)
 }
 
 export async function forkRepo(

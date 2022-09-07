@@ -68,7 +68,9 @@ export async function run(): Promise<void> {
       core.info(
         `⏫ Promoting user permissions for ${user} to ${PERMISSIONS.ADMIN}`
       )
+      core.info(`-------- START CALL changeUserPermissions -----------`)
       changeUserPermissions(org, repo, user, PERMISSIONS.ADMIN)
+      core.info(`-------- END CALL changeUserPermissions -----------`)
     }
   } catch (err) {
     core.setFailed(
