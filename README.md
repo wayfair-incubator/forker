@@ -146,7 +146,7 @@ Run the Jest unit tests:
 $ npm test
 
  PASS  __tests__/main.test.ts
-  ✓ action throws error without required inputs (2 ms)
+  ✓ forker action runs with env inputs (631 ms)
 ```
 
 Convenience command to run all npm scripts:
