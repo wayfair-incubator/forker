@@ -69,14 +69,12 @@ async function changeUserPermissions(org, repo, user, permission) {
     core.info(`------ START changeUserPermissions --------`);
     core.info(`Params: ${org}, ${repo}, ${user}, ${permission}`);
     try {
-        const res = await octokit.request('PUT /repos/{org}/{repo}/collaborators/{user}', {
-            org: 'org',
-            repo: 'repo',
-            user: 'user',
-            permission: 'permission'
+        const res = await octokit.request('PUT /repos/{owner}/{repo}/collaborators/{username}', {
+            owner: org,
+            repo,
+            username: user,
+            permission
         });
-        // TODO remove debug log
-        core.info(`Response: ${res.data}`);
         if (res.status === const_1.HTTP.CREATED) {
             core.debug(`New collaborator invitation created for user ${user}`);
         }
@@ -298,9 +296,7 @@ async function run() {
         // Optionally promote the requesting user's permissions to admin for the forked repository
         if (promoteUser && org && typeof user !== 'undefined') {
             core.info(`⏫ Promoting user permissions for ${user} to ${const_1.PERMISSIONS.ADMIN}`);
-            core.info(`-------- START CALL changeUserPermissions -----------`);
             (0, github_1.changeUserPermissions)(org, repo, user, const_1.PERMISSIONS.ADMIN);
-            core.info(`-------- END CALL changeUserPermissions -----------`);
         }
     }
     catch (err) {
