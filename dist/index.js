@@ -66,6 +66,7 @@ const rest_1 = __nccwpck_require__(5375);
 const token = core.getInput('token', { required: true });
 const octokit = new rest_1.Octokit({ auth: token });
 async function changeUserPermissions(org, repo, user, permission) {
+    core.info(`------ START changeUserPermissions --------`);
     try {
         const res = await octokit.request('PUT /repos/{org}/{repo}/collaborators/{user}', {
             org: 'org',
@@ -73,14 +74,13 @@ async function changeUserPermissions(org, repo, user, permission) {
             user: 'user',
             permission: 'permission'
         });
+        // TODO remove debug log
+        core.info(`Response: ${res.data}`);
+        core.info(`Params: ${org}, ${repo}, ${user}, ${permission}`);
         if (res.status === const_1.HTTP.CREATED) {
-            // TODO remove debug log
-            core.info(`${res.data}`);
             core.debug(`New collaborator invitation created for user ${user}`);
         }
         else if (res.status === const_1.HTTP.NO_CONTENT) {
-            // TODO remove debug log
-            core.info(`${res.data}`);
             core.debug(`Existing member ${user} granted ${permission} permissions`);
         }
     }
@@ -95,6 +95,7 @@ async function changeUserPermissions(org, repo, user, permission) {
             core.setFailed(`🚨 Failed to apply ${permission} permissions for user ${user}: ${err.message}`);
         }
     }
+    core.info(`------ END changeUserPermissions --------`);
 }
 exports.changeUserPermissions = changeUserPermissions;
 async function forkRepo(owner, repo, org) {
@@ -296,7 +297,9 @@ async function run() {
         // Optionally promote the requesting user's permissions to admin for the forked repository
         if (promoteUser && org && typeof user !== 'undefined') {
             core.info(`⏫ Promoting user permissions for ${user} to ${const_1.PERMISSIONS.ADMIN}`);
+            core.info(`-------- START CALL changeUserPermissions -----------`);
             (0, github_1.changeUserPermissions)(org, repo, user, const_1.PERMISSIONS.ADMIN);
+            core.info(`-------- END CALL changeUserPermissions -----------`);
         }
     }
     catch (err) {
