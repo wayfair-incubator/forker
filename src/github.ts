@@ -22,7 +22,8 @@ export async function changeUserPermissions(
       }
     )
     // TODO remove debug log
-    core.info(`${res.data}`)
+    core.info(`Response: ${res.data}`)
+    core.info(`Params: ${org}, ${repo}, ${user}, ${permission}`)
     if (res.status === HTTP.CREATED) {
       core.debug(`New collaborator invitation created for user ${user}`)
     } else if (res.status === HTTP.NO_CONTENT) {
@@ -38,7 +39,6 @@ export async function changeUserPermissions(
         }`
       )
     } else {
-      core.info(`${org}, ${repo}, ${user}, ${permission}`)
       core.setFailed(
         `🚨 Failed to apply ${permission} permissions for user ${user}: ${
           (err as Error).message
