@@ -12,6 +12,7 @@
     "lint": "eslint src/**/*.ts",
     "package": "ncc build --source-map --license licenses.txt",
     "test": "jest --colors",
+    "fork": "npm run clean && npm run build && npm run format && npm run lint && npm run package",
     "all": "npm run clean && npm run build && npm run format && npm run lint && npm run package && npm run test"
   },
   "repository": {
