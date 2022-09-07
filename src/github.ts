@@ -21,13 +21,11 @@ export async function changeUserPermissions(
         permission: 'permission'
       }
     )
+    // TODO remove debug log
+    core.info(`${res.data}`)
     if (res.status === HTTP.CREATED) {
-      // TODO remove debug log
-      core.info(`${res.data}`)
       core.debug(`New collaborator invitation created for user ${user}`)
     } else if (res.status === HTTP.NO_CONTENT) {
-      // TODO remove debug log
-      core.info(`${res.data}`)
       core.debug(`Existing member ${user} granted ${permission} permissions`)
     }
   } catch (err: any) {
@@ -40,6 +38,7 @@ export async function changeUserPermissions(
         }`
       )
     } else {
+      core.info(`${org}, ${repo}, ${user}, ${permission}`)
       core.setFailed(
         `🚨 Failed to apply ${permission} permissions for user ${user}: ${
           (err as Error).message
