@@ -1,4 +1,4 @@
-name: build + lint forks
+name: build + test + lint forks
 
 on: # Rebuild any PRs submitted by forks
   pull_request:
