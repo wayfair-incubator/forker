@@ -4,12 +4,8 @@ import * as cp from 'child_process'
 import * as path from 'path'
 
 test('forker action runs with env inputs', () => {
-  process.env['INPUT_TOKEN'] = process.env['INPUT_TOKEN']
-    ? process.env['INPUT_TOKEN']
-    : process.env['ACCESS_TOKEN']
   process.env['INPUT_OWNER'] = 'tremor-rs'
   process.env['INPUT_REPO'] = 'tremor-bot'
-  process.env['INPUT_ORG'] = 'wayfair-contribs'
   process.env['INPUT_CHECKUSER'] = 'false'
   process.env['INPUT_PROMOTEUSER'] = 'false'
   process.env['INPUT_LICENSEALLOWLIST'] =
