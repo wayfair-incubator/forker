@@ -66,8 +66,6 @@ const rest_1 = __nccwpck_require__(5375);
 const token = core.getInput('token', { required: true });
 const octokit = new rest_1.Octokit({ auth: token });
 async function changeUserPermissions(org, repo, user, permission) {
-    core.info(`------ START changeUserPermissions --------`);
-    core.info(`Params: ${org}, ${repo}, ${user}, ${permission}`);
     try {
         const res = await octokit.request('PUT /repos/{owner}/{repo}/collaborators/{username}', {
             owner: org,
@@ -83,7 +81,6 @@ async function changeUserPermissions(org, repo, user, permission) {
         }
     }
     catch (err) {
-        core.info(`Response: ${err.data}`);
         if (err.status === const_1.HTTP.FORBIDDEN) {
             core.debug(`Unable to apply ${permission} permissions for user ${user}`);
         }
@@ -94,7 +91,6 @@ async function changeUserPermissions(org, repo, user, permission) {
             core.setFailed(`🚨 Failed to apply ${permission} permissions for user ${user}: ${err.message}`);
         }
     }
-    core.info(`------ END changeUserPermissions --------`);
 }
 exports.changeUserPermissions = changeUserPermissions;
 async function forkRepo(owner, repo, org) {
@@ -288,6 +284,8 @@ async function run() {
             }
             else {
                 core.setFailed(`🚨 User ${user} not a member of ${org}, please join the organization before trying again!`);
+                // Do not proceed with fork creation if org membership check fails
+                return;
             }
         }
         // Fork the specified repo into user namespace, unless an organization is specified

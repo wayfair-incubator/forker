@@ -56,6 +56,8 @@ export async function run(): Promise<void> {
         core.setFailed(
           `🚨 User ${user} not a member of ${org}, please join the organization before trying again!`
         )
+        // Do not proceed with fork creation if org membership check fails
+        return
       }
     }
 
