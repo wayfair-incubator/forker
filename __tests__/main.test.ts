@@ -3,7 +3,7 @@ import * as process from 'process'
 import * as cp from 'child_process'
 import * as path from 'path'
 
-test('action exists', () => {
+test('forker action runs with env inputs', () => {
   process.env['INPUT_OWNER'] = 'tremor-rs'
   process.env['INPUT_REPO'] = 'tremor-bot'
   process.env['INPUT_ORG'] = 'wayfair-contribs'
