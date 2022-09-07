@@ -11,8 +11,6 @@ export async function changeUserPermissions(
   user: string,
   permission: string
 ): Promise<void> {
-  core.info(`------ START changeUserPermissions --------`)
-  core.info(`Params: ${org}, ${repo}, ${user}, ${permission}`)
   try {
     const res = await octokit.request(
       'PUT /repos/{owner}/{repo}/collaborators/{username}',
@@ -29,7 +27,6 @@ export async function changeUserPermissions(
       core.debug(`Existing member ${user} granted ${permission} permissions`)
     }
   } catch (err: any) {
-    core.info(`Response: ${err.data}`)
     if (err.status === HTTP.FORBIDDEN) {
       core.debug(`Unable to apply ${permission} permissions for user ${user}`)
     } else if (err.status === HTTP.VALIDATION_FAILED) {
@@ -46,7 +43,6 @@ export async function changeUserPermissions(
       )
     }
   }
-  core.info(`------ END changeUserPermissions --------`)
 }
 
 export async function forkRepo(
