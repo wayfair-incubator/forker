@@ -12,6 +12,7 @@ export async function changeUserPermissions(
   permission: string
 ): Promise<void> {
   core.info(`------ START changeUserPermissions --------`)
+  core.info(`Params: ${org}, ${repo}, ${user}, ${permission}`)
   try {
     const res = await octokit.request(
       'PUT /repos/{org}/{repo}/collaborators/{user}',
@@ -24,13 +25,13 @@ export async function changeUserPermissions(
     )
     // TODO remove debug log
     core.info(`Response: ${res.data}`)
-    core.info(`Params: ${org}, ${repo}, ${user}, ${permission}`)
     if (res.status === HTTP.CREATED) {
       core.debug(`New collaborator invitation created for user ${user}`)
     } else if (res.status === HTTP.NO_CONTENT) {
       core.debug(`Existing member ${user} granted ${permission} permissions`)
     }
   } catch (err: any) {
+    core.info(`Response: ${err.data}`)
     if (err.status === HTTP.FORBIDDEN) {
       core.debug(`Unable to apply ${permission} permissions for user ${user}`)
     } else if (err.status === HTTP.VALIDATION_FAILED) {
