@@ -67,6 +67,7 @@ const token = core.getInput('token', { required: true });
 const octokit = new rest_1.Octokit({ auth: token });
 async function changeUserPermissions(org, repo, user, permission) {
     core.info(`------ START changeUserPermissions --------`);
+    core.info(`Params: ${org}, ${repo}, ${user}, ${permission}`);
     try {
         const res = await octokit.request('PUT /repos/{org}/{repo}/collaborators/{user}', {
             org: 'org',
@@ -76,7 +77,6 @@ async function changeUserPermissions(org, repo, user, permission) {
         });
         // TODO remove debug log
         core.info(`Response: ${res.data}`);
-        core.info(`Params: ${org}, ${repo}, ${user}, ${permission}`);
         if (res.status === const_1.HTTP.CREATED) {
             core.debug(`New collaborator invitation created for user ${user}`);
         }
@@ -85,6 +85,7 @@ async function changeUserPermissions(org, repo, user, permission) {
         }
     }
     catch (err) {
+        core.info(`Response: ${err.data}`);
         if (err.status === const_1.HTTP.FORBIDDEN) {
             core.debug(`Unable to apply ${permission} permissions for user ${user}`);
         }
