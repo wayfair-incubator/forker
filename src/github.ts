@@ -15,16 +15,14 @@ export async function changeUserPermissions(
   core.info(`Params: ${org}, ${repo}, ${user}, ${permission}`)
   try {
     const res = await octokit.request(
-      'PUT /repos/{org}/{repo}/collaborators/{user}',
+      'PUT /repos/{owner}/{repo}/collaborators/{username}',
       {
-        org: 'org',
-        repo: 'repo',
-        user: 'user',
-        permission: 'permission'
+        owner: org,
+        repo,
+        username: user,
+        permission
       }
     )
-    // TODO remove debug log
-    core.info(`Response: ${res.data}`)
     if (res.status === HTTP.CREATED) {
       core.debug(`New collaborator invitation created for user ${user}`)
     } else if (res.status === HTTP.NO_CONTENT) {
