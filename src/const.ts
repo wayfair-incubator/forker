@@ -17,4 +17,4 @@ export const PERMISSIONS = {
   PUSH: 'push',
   MAINTAIN: 'maintain',
   ADMIN: 'admin'
-}
+} as const
