@@ -74,7 +74,7 @@ async function changeUserPermissions(org, repo, user, permission) {
             permission
         });
         if (res.status === const_1.HTTP.CREATED) {
-            core.debug(`New collaborator invitation created for user ${user}`);
+            core.debug(`New repository collaboration invite sent for user ${user}`);
         }
         else if (res.status === const_1.HTTP.NO_CONTENT) {
             core.debug(`Existing member ${user} granted ${permission} permissions`);

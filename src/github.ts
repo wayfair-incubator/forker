@@ -22,7 +22,7 @@ export async function changeUserPermissions(
       }
     )
     if (res.status === HTTP.CREATED) {
-      core.debug(`New collaborator invitation created for user ${user}`)
+      core.debug(`New repository collaboration invite sent for user ${user}`)
     } else if (res.status === HTTP.NO_CONTENT) {
       core.debug(`Existing member ${user} granted ${permission} permissions`)
     }
