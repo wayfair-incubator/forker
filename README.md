@@ -53,7 +53,7 @@ Enforces existing membership for a specified `user` in a specified GitHub `org`.
 
 > 💡 **Tip:** If the user **is** already a GitHub `org` member, `forker` will proceed to fork the `repo`. You can optionally combine this with the `promoteUser` option to grant the user `admin` [permissions](https://docs.github.com/en/organizations/managing-access-to-your-organizations-repositories/repository-roles-for-an-organization) on the forked `repo`.
 >
-> 🚨 If the user is **not** a GitHub `org` member, `forker` will exit without forking the repository.
+> 🚨 **Warning:** If the user is **not** a GitHub `org` member, `forker` will exit without forking the repository.
 
 **Example:** `true`
 
@@ -64,6 +64,8 @@ Enforces existing membership for a specified `user` in a specified GitHub `org`.
 Grants GitHub `org` members `admin` [permissions](https://docs.github.com/en/organizations/managing-access-to-your-organizations-repositories/repository-roles-for-an-organization) on the `repo` they wish to fork.
 
 > 💡 **Tip:** If the requesting user only intends to make upstream contributions to the `repo` they wish to fork, it is **very likely** that they will not require elevated `admin` privileges. That said, if there is an eventual desire to truly _fork_ off and deviate substantially from the originating project, this option helps give users better control over their project and maintainership.
+>
+> 🚨 **Warning:** If the `promoteUser` option is **not** used in combination with `checkUser`, GitHub users who are not currently GitHub org members may still receive elevated permissions for a repository fork within your organization. If this is an unacceptable degree of risk, you may wish to strictly enforce GitHub org membership by additionally setting `checkUser` to `true`.
 
 **Example:** `true`
 
