@@ -20,7 +20,8 @@
     {
       "matchPackageNames": ["jest", "ts-jest", "@types/jest"],
       "matchPackagePrefixes": ["jest-"],
-      "groupName": "Jest"
+      "groupName": "Jest",
+      "allowedVersions": "28.x"
     },
     {
       "matchPackageNames": ["eslint"],
