@@ -1,4 +1,4 @@
-name: Identify and close stale issues and pull requests
+name: close stale issues + PRs
 
 on:
   schedule:

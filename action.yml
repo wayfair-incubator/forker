@@ -20,8 +20,12 @@ inputs:
   user:
     description: 'GitHub user requesting the fork'
     required: false
-  addUser:
-    description: 'Add GitHub user to organization if missing'
+  checkUser:
+    description: 'Enforce organization membership for GitHub user'
+    required: false
+    default: false
+  promoteUser:
+    description: 'Promote GitHub user to admin of the forked repo'
     required: false
     default: false
   licenseAllowlist:

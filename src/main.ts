@@ -1,12 +1,23 @@
 import * as core from '@actions/core'
-import {forkRepo, inviteMember, isOrgMember, isValidLicense} from './github'
+import {PERMISSIONS} from './const'
+import {
+  changeUserPermissions,
+  forkRepo,
+  isOrgMember,
+  isValidLicense
+} from './github'
 
 export async function run(): Promise<void> {
   const owner: string = core.getInput('owner', {required: true})
   const repo: string = core.getInput('repo', {required: true})
   const org: string = core.getInput('org', {required: false})
   const user: string = core.getInput('user', {required: false})
-  const addUser: boolean = core.getBooleanInput('addUser', {required: false})
+  const checkUser: boolean = core.getBooleanInput('checkUser', {
+    required: false
+  })
+  const promoteUser: boolean = core.getBooleanInput('promoteUser', {
+    required: false
+  })
   const licenseAllowlist: string[] = core.getMultilineInput(
     'licenseAllowlist',
     {
@@ -31,25 +42,35 @@ export async function run(): Promise<void> {
       }
     }
 
-    // Fork the specified repo into user namespace, unless an organization is specified
-    core.info(`⑂ Creating fork of repository ${repo}...`)
-    await forkRepo(owner, repo, org)
-
-    // Optionally check org membership status for a specified user, and invite if missing
-    if (addUser && org && typeof user !== 'undefined') {
+    // Optionally enforce organization membership status for a specified user
+    // Exit early if the user is determined not to be an organization member
+    if (checkUser && org && typeof user !== 'undefined') {
       core.info(
         `🔍 Checking membership status of user ${user} in ${org} organization...`
       )
       if (await isOrgMember(org, user)) {
         core.info(
-          `✅ User ${user} already a member of ${org}, no action needed`
+          `✅ User ${user} is a member of ${org}, proceeding with fork request...`
         )
       } else {
-        core.info(
-          `📥 Inviting user ${user} to ${org} org, make sure they check their inbox!`
+        core.setFailed(
+          `🚨 User ${user} not a member of ${org}, please join the organization before trying again!`
         )
-        inviteMember(org, user)
+        // Do not proceed with fork creation if org membership check fails
+        return
       }
+    }
+
+    // Fork the specified repo into user namespace, unless an organization is specified
+    core.info(`⑂ Creating fork of repository ${repo}...`)
+    await forkRepo(owner, repo, org)
+
+    // Optionally promote the requesting user's permissions to admin for the forked repository
+    if (promoteUser && org && typeof user !== 'undefined') {
+      core.info(
+        `⏫ Promoting user permissions for ${user} to ${PERMISSIONS.ADMIN}`
+      )
+      changeUserPermissions(org, repo, user, PERMISSIONS.ADMIN)
     }
   } catch (err) {
     core.setFailed(

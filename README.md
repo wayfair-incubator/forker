@@ -3,14 +3,13 @@
 [![Release](https://img.shields.io/github/v/release/wayfair-incubator/forker?display_name=tag)](https://github.com/wayfair-incubator/forker/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-7F187F.svg)](LICENSE)
 [![Code of Conduct](https://img.shields.io/badge/CoC-2.0-24B8EE.svg)](CODE_OF_CONDUCT.md)
-[![Lint](https://github.com/wayfair-incubator/forker/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/wayfair-incubator/forker/actions/workflows/lint.yml)
-[![Tests](https://github.com/wayfair-incubator/forker/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/wayfair-incubator/forker/actions/workflows/test.yml)
+[![Build](https://github.com/wayfair-incubator/forker/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/wayfair-incubator/forker/actions/workflows/build.yml)
 
-[GitHub Action](https://github.com/features/actions) to automate fork creation. This action uses [octokit.js](https://github.com/octokit/octokit.js) and the [GitHub API](https://docs.github.com/en/rest) to automatically create a repository fork, either in your personal namespace or an organization you administer.
+[GitHub Action](https://github.com/features/actions) to automate fork creation. This action uses [octokit.js](https://github.com/octokit/octokit.js) and the [GitHub API](https://docs.github.com/en/rest) to automatically create a repository fork, either in your personal GitHub account or a GitHub organization that you administer.
 
-Before forking a repository into an organization, `forker` will check membership and outside collaborator status for the user requesting the fork. When the `addUser` option is enabled, `forker` will automatically invite the specified `user` to become a member of the organization where the fork has been requested.
+If the `checkUser` option is enabled, `forker` will check the specified GitHub organization membership status for the user requesting the fork. If the user is already an organization member, `forker` will proceed to fork the repo, and then optionally grant the user `admin` permissions when using in combination with the `promoteUser` option. If the user is **not** an organization member, `forker` will exit without forking the repository, and display an error.
 
-For legal and compliance reasons, organizations or individuals can choose to provide an optional `licenseAllowlist` to compare against the [license of the repository](https://docs.github.com/en/rest/reference/licenses) being forked. If the license key returned by the GitHub API is not found within the provided allowlist, `forker` will exit without forking the repository.
+For legal and compliance reasons, organizations or individuals can choose to provide an optional `licenseAllowlist` to compare against the [license of the repository](https://docs.github.com/en/rest/reference/licenses) being forked. If the license key returned by the GitHub API is not found within the provided allowlist, `forker` will exit without forking the repository, and display an error.
 
 ## Inputs
 
@@ -18,7 +17,7 @@ For legal and compliance reasons, organizations or individuals can choose to pro
 
 The GitHub API [token](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token) you wish to use for automating fork creation. If you are using GitHub [encrypted secrets](https://docs.github.com/en/actions/reference/encrypted-secrets#using-encrypted-secrets-in-a-workflow), you should reference the variable name you have defined for your secret.
 
-> 💡 **Note:** Ensure the token you are using has sufficient permissions to fork repositories into your intended destination (either an organization or individual user account). In particular, the builtin `GITHUB_TOKEN` has [read-only permissions](https://docs.github.com/en/actions/reference/authentication-in-a-workflow#permissions-for-the-github_token) for repository forks, and therefore may not provide sufficient privileges for use with `forker`.
+> 💡 **Tip:** Ensure the token you are using has sufficient permissions to fork repositories into your intended destination (either an organization or individual user account). In particular, the builtin `GITHUB_TOKEN` has [read-only permissions](https://docs.github.com/en/actions/reference/authentication-in-a-workflow#permissions-for-the-github_token) for repository forks, and therefore may not provide sufficient privileges for use with `forker`.
 
 **Example:** `${{ secrets.ACCESS_TOKEN }}`
 
@@ -44,15 +43,29 @@ The name of the destination GitHub organization where you wish to fork the speci
 
 The GitHub account for the person requesting the fork.
 
-> 💡 **Note:** This is only required if you are managing a GitHub organization, and wish to associate a specific user with the fork request. If neither `org` nor `user` inputs are specified, `forker` will default to forking the repository into your own GitHub account. Similarly, if _only_ `user` is provided without an accompanying `org`, forker will ignore the field, since users cannot create forks on behalf of other users, only GitHub organizations.
+> 💡 **Tip:** This is only required if you are managing a GitHub organization, and wish to associate a specific user with the fork request. If neither `org` nor `user` inputs are specified, `forker` will default to forking the repository into your own GitHub account. Similarly, if _only_ `user` is provided without an accompanying `org`, forker will ignore the field, since users cannot create forks on behalf of other users, only GitHub organizations.
 
 **Example:** `lelia`
 
-### `addUser` (boolean, optional)
+### `checkUser` (boolean, optional)
 
-When used in combination with the `org` and `user` inputs, the `addUser` option will automatically invite a specified GitHub user to the destination organization if they are not already a member.
+Enforces existing membership for a specified `user` in a specified GitHub `org`.
 
-> 💡 **Note:** The email invitation will be sent from whichever account is used to authenticate the GitHub action and fork the requested repository, meaning there must be sufficient permissions to invite outside users to the organization.
+> 💡 **Tip:** If the user **is** already a GitHub `org` member, `forker` will proceed to fork the `repo`. You can optionally combine this with the `promoteUser` option to grant the user `admin` [permissions](https://docs.github.com/en/organizations/managing-access-to-your-organizations-repositories/repository-roles-for-an-organization) on the forked `repo`.
+>
+> 🚨 **Warning:** If the user is **not** a GitHub `org` member, `forker` will exit without forking the repository.
+
+**Example:** `true`
+
+**Default:** `false`
+
+### `promoteUser` (boolean, optional)
+
+Grants GitHub `org` members `admin` [permissions](https://docs.github.com/en/organizations/managing-access-to-your-organizations-repositories/repository-roles-for-an-organization) on the `repo` they wish to fork.
+
+> 💡 **Tip:** If the requesting user only intends to make upstream contributions to the `repo` they wish to fork, it is **very likely** that they will not require elevated `admin` privileges. That said, if there is an eventual desire to truly _fork_ off and deviate substantially from the originating project, this option helps give users better control over their project and maintainership.
+>
+> 🚨 **Warning:** If the `promoteUser` option is **not** used in combination with `checkUser`, GitHub users who are not currently GitHub org members may still receive elevated permissions for a repository fork within your organization. If this is an unacceptable degree of risk, you may wish to strictly enforce GitHub org membership by additionally setting `checkUser` to `true`.
 
 **Example:** `true`
 
@@ -70,10 +83,10 @@ A newline-delimited (`"\n"`) string representing a list of allowed [license keys
 
 ### Typical
 
-In most cases, you'll want to use the latest stable version (eg. `v0.0.4`):
+In most cases, you'll want to use the latest stable version (eg. `v0.0.5`):
 
 ```yaml
-uses: wayfair-incubator/forker@v0.0.4
+uses: wayfair-incubator/forker@v0.0.5
 with:
   token: ${{ secrets.ACCESS_TOKEN }}
   repo: tremor-runtime
@@ -83,10 +96,10 @@ with:
 
 ### Development
 
-If you're actively [developing](#Developing) a new feature for the action, you can always reference a specific commit SHA (eg. `98e4e7dcc6c9a8cb29c1f8de7d6d2c03dcabc4b9`):
+If you're actively developing a new feature for the action, you can always reference a specific commit SHA (eg. `a694606ff02c8ba2654865adeb7a6d2053b34afa`):
 
 ```yaml
-uses: wayfair-incubator/forker@98e4e7dcc6c9a8cb29c1f8de7d6d2c03dcabc4b9
+uses: wayfair-incubator/forker@a694606ff02c8ba2654865adeb7a6d2053b34afa
 with:
   token: ${{ secrets.ACCESS_TOKEN }}
   repo: tremor-runtime
@@ -96,23 +109,24 @@ with:
 
 ### Advanced
 
-If you are automating forking on behalf of a GitHub organization, you may wish to leverage the optional `addUser` and `licenseAllowlist` params:
+If you are automating the creation of forks on behalf of a GitHub organization with many users, you may wish to leverage the optional `checkUser`, `promoteUser`, and `licenseAllowlist` params:
 
 ```yaml
-uses: wayfair-incubator/forker@v0.0.4
+uses: wayfair-incubator/forker@v0.0.5
 with:
   token: ${{ secrets.ACCESS_TOKEN }}
   repo: tremor-runtime
   owner: tremor-rs
   org: wayfair-contribs
   user: lelia
-  addUser: true
+  checkUser: true
+  promoteUser: true
   licenseAllowlist: "0bsd\napache-2.0\nmit"
 ```
 
 ## Developing
 
-> 💡 **Tip:** Please use [node](https://nodejs.org/en/download/releases/) v9.x or later, as well as an npm-compatible version of [typescript](https://www.npmjs.com/package/typescript).
+> 💡 **Tip:** Please use [node](https://nodejs.org/en/download/releases/) v12.x or later, as well as an npm-compatible version of [typescript](https://www.npmjs.com/package/typescript).
 
 Install the node dependencies:
 
@@ -128,13 +142,19 @@ npm run build && npm run package
 
 Run the Jest unit tests:
 
-> 💡 **Note:** Before running any tests locally which require authenticating against the GitHub API, please ensure you've defined a valid token for the environment variable `INPUT_TOKEN` in your preferred shell (or shell profile), eg: `export INPUT_TOKEN="my_github_api_token_value"`. This is functionally equivalent to defining an input value for the `token` parameter in your GitHub Action's [workflow YAML](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions) configuration.
+> 💡 **Tip:** Before running any tests locally which require authenticating against the GitHub API, please ensure you've defined a valid token for the environment variable `INPUT_TOKEN` in your preferred shell (or shell profile), eg: `export INPUT_TOKEN="my_github_api_token_value"`. This is functionally equivalent to defining an input value for the `token` parameter in your GitHub Action's [workflow YAML](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions) configuration.
 
 ```bash
 $ npm test
 
  PASS  __tests__/main.test.ts
-  ✓ action throws error without required inputs (2 ms)
+  ✓ forker action runs with env inputs (631 ms)
+```
+
+Convenience command to run all npm scripts:
+
+```bash
+npm run all
 ```
 
 ### Publishing
@@ -147,10 +167,10 @@ Then run [ncc](https://github.com/zeit/ncc) and push the results:
 npm run package
 git add dist
 git commit -a -m "prod dependencies"
-git push origin releases/v0.0.4
+git push origin releases/v0.0.5
 ```
 
-> 💡 **Note:** We recommend using the `--license` option for `ncc`, which will create a license file for all of the production node modules used in your project.
+> 💡 **Tip:** We recommend using the `--license` option for `ncc`, which will create a license file for all of the production node modules used in your project.
 
 Your action is now published! 🚀
 
@@ -158,7 +178,7 @@ See the [versioning documentation](https://github.com/actions/toolkit/blob/maste
 
 ### Validation
 
-You can now validate the action by referencing `./` in a workflow in your repo (see [`test.yml`](.github/workflows/test.yml))
+You can now validate the action by referencing `./` in a workflow in your repo (see [`build.yml`](.github/workflows/build.yml))
 
 ```yaml
 uses: ./

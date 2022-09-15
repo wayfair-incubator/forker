@@ -5,6 +5,46 @@ import {Octokit} from '@octokit/rest'
 const token: string = core.getInput('token', {required: true})
 const octokit = new Octokit({auth: token})
 
+export async function changeUserPermissions(
+  org: string,
+  repo: string,
+  user: string,
+  permission: string
+): Promise<void> {
+  try {
+    const res = await octokit.request(
+      'PUT /repos/{owner}/{repo}/collaborators/{username}',
+      {
+        owner: org,
+        repo,
+        username: user,
+        permission
+      }
+    )
+    if (res.status === HTTP.CREATED) {
+      core.debug(`New repository collaboration invite sent for user ${user}`)
+    } else if (res.status === HTTP.NO_CONTENT) {
+      core.debug(`Existing member ${user} granted ${permission} permissions`)
+    }
+  } catch (err: any) {
+    if (err.status === HTTP.FORBIDDEN) {
+      core.debug(`Unable to apply ${permission} permissions for user ${user}`)
+    } else if (err.status === HTTP.VALIDATION_FAILED) {
+      core.setFailed(
+        `🚨 Unable to validate permissions for user ${user}: ${
+          (err as Error).message
+        }`
+      )
+    } else {
+      core.setFailed(
+        `🚨 Failed to apply ${permission} permissions for user ${user}: ${
+          (err as Error).message
+        }`
+      )
+    }
+  }
+}
+
 export async function forkRepo(
   owner: string,
   repo: string,
@@ -75,7 +115,7 @@ export async function getOrgMembership(
       )
     } else {
       core.setFailed(
-        `🚨 Failed to retrieve membership status for user: ${
+        `🚨 Failed to retrieve membership status for user ${user}: ${
           (err as Error).message
         }`
       )
@@ -131,25 +171,6 @@ export async function getUserId(user: string): Promise<number> {
       `🚨 Failed to retrieve user ID for user: ${(err as Error).message}`
     )
     return -1
-  }
-}
-
-export async function inviteMember(org: string, user: string): Promise<void> {
-  const id = await getUserId(user)
-  core.debug(`Got user ID: ${id}`)
-  try {
-    const res = await octokit.request('POST /orgs/{org}/invitations', {
-      org,
-      invitee_id: id
-    })
-    if (res.status === HTTP.CREATED) {
-      core.debug(`User successfully invited`)
-    } else {
-      core.debug(`Unable to validate invitation`)
-      core.setFailed(`🚨 Failed to invite user to org: ${org}`)
-    }
-  } catch (err) {
-    core.setFailed(`🚨 Failed to invite user to org: ${(err as Error).message}`)
   }
 }
 
