@@ -126,9 +126,9 @@ with:
 
 ## Developing
 
-> 💡 **Tip:** Please use [node](https://nodejs.org/en/download/releases/) v12.x or later, as well as an npm-compatible version of [typescript](https://www.npmjs.com/package/typescript).
+> 💡 **Tip:** Please use [node.js](https://nodejs.org/en/download/releases/) v17.x or later, as well as [TypeScript](https://www.npmjs.com/package/typescript) v4.x or later.
 
-Install the node dependencies:
+Install the node.js dependencies:
 
 ```bash
 npm install
