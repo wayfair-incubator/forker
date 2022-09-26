@@ -183,9 +183,9 @@ export async function isOrgMember(org: string, user: string): Promise<boolean> {
 export async function isValidLicense(
   owner: string,
   repo: string,
-  whitelist: string[]
+  allowList: string[]
 ): Promise<boolean> {
   const repoLicense = await getRepoLicense(owner, repo)
   core.debug(`Got repository license: ${repoLicense}`)
-  return whitelist.includes(repoLicense)
+  return allowList.includes(repoLicense)
 }
