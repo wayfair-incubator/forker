@@ -9,7 +9,7 @@ export async function changeUserPermissions(
   org: string,
   repo: string,
   user: string,
-  permission: string
+  permission?: any
 ): Promise<void> {
   try {
     const res = await octokit.request(
