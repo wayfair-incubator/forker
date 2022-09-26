@@ -205,10 +205,10 @@ async function isOrgMember(org, user) {
     return orgMembership ? true : false;
 }
 exports.isOrgMember = isOrgMember;
-async function isValidLicense(owner, repo, whitelist) {
+async function isValidLicense(owner, repo, allowList) {
     const repoLicense = await getRepoLicense(owner, repo);
     core.debug(`Got repository license: ${repoLicense}`);
-    return whitelist.includes(repoLicense);
+    return allowList.includes(repoLicense);
 }
 exports.isValidLicense = isValidLicense;
 
@@ -263,14 +263,14 @@ async function run() {
         required: false
     });
     try {
-        // Optionally enforce a whitelist of allowed repository licenses for forking
+        // Optionally enforce an allowList of approved repository licenses for forking
         if (!licenseAllowlist.includes('undefined')) {
-            core.info(`⚖️ Checking repository license for ${repo} against provided whitelist...`);
+            core.info(`⚖️ Checking repository license for ${repo} against provided allowList...`);
             if (await (0, github_1.isValidLicense)(owner, repo, licenseAllowlist)) {
-                core.info(`✅ Valid license, proceeding with fork creation`);
+                core.info(`✅ Valid license, proceeding with fork creation...`);
             }
             else {
-                core.setFailed(`🚨 License not found in whitelist, please check to ensure the repository is compliant!`);
+                core.setFailed(`🚨 License not found in allowList, please check to ensure the repository is compliant!`);
                 // Do not proceed with fork creation if license compliance check fails
                 return;
             }
