@@ -79,6 +79,14 @@ A newline-delimited (`"\n"`) string representing a list of allowed [license keys
 
 **Example:** `"0bsd\napache-2.0\nmit"`
 
+## Outputs
+
+### `forkUrl` (string)
+
+A string representing the HTTPS URL of the newly-forked repository.
+
+**Example:** `"https://github.com/wayfair-contribs/tremor-runtime"`
+
 ## Usage
 
 ### Typical
