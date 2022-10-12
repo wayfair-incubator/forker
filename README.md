@@ -11,6 +11,8 @@ If the `checkUser` option is enabled, `forker` will check the specified GitHub o
 
 For legal and compliance reasons, organizations or individuals can choose to provide an optional `licenseAllowlist` to compare against the [license of the repository](https://docs.github.com/en/rest/reference/licenses) being forked. If the license key returned by the GitHub API is not found within the provided allowlist, `forker` will exit without forking the repository, and display an error.
 
+---
+
 ## Inputs
 
 ### `token` (string, required)
@@ -79,14 +81,24 @@ A newline-delimited (`"\n"`) string representing a list of allowed [license keys
 
 **Example:** `"0bsd\napache-2.0\nmit"`
 
+## Outputs
+
+### `forkUrl` (string)
+
+A string representing the HTTPS URL of the newly-forked repository.
+
+**Example:** `"https://github.com/wayfair-contribs/tremor-runtime"`
+
+---
+
 ## Usage
 
 ### Typical
 
-In most cases, you'll want to use the latest stable version (eg. `v0.0.5`):
+In most cases, you'll want to use the latest stable version (eg. `v0.0.6`):
 
 ```yaml
-uses: wayfair-incubator/forker@v0.0.5
+uses: wayfair-incubator/forker@v0.0.6
 with:
   token: ${{ secrets.ACCESS_TOKEN }}
   repo: tremor-runtime
@@ -112,7 +124,7 @@ with:
 If you are automating the creation of forks on behalf of a GitHub organization with many users, you may wish to leverage the optional `checkUser`, `promoteUser`, and `licenseAllowlist` params:
 
 ```yaml
-uses: wayfair-incubator/forker@v0.0.5
+uses: wayfair-incubator/forker@v0.0.6
 with:
   token: ${{ secrets.ACCESS_TOKEN }}
   repo: tremor-runtime
@@ -123,6 +135,8 @@ with:
   promoteUser: true
   licenseAllowlist: "0bsd\napache-2.0\nmit"
 ```
+
+---
 
 ## Developing
 
@@ -167,7 +181,7 @@ Then run [ncc](https://github.com/zeit/ncc) and push the results:
 npm run package
 git add dist
 git commit -a -m "prod dependencies"
-git push origin releases/v0.0.5
+git push origin releases/v0.0.6
 ```
 
 > 💡 **Tip:** We recommend using the `--license` option for `ncc`, which will create a license file for all of the production node modules used in your project.

@@ -111,7 +111,8 @@ async function forkRepo(owner, repo, org) {
                 core.info(`As a result, the new repository fork URL might be auto-incremented (eg. my-forked-repo-1).`);
                 core.info(`If this was not intentional, please check for exisiting repositories on your Github account or organization!\n`);
             }
-            core.info(`🎉 Forked repository now available at: ${res.data.html_url}`);
+            core.info(`🎉 Forked repository now available at: ${url}`);
+            core.setOutput('forkUrl', url);
         }
     }
     catch (err) {
