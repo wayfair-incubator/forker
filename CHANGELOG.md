@@ -5,6 +5,16 @@ All notable changes to `Forker` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.6] - 2022-10-12
+
+### Added
+
+- A new GitHub Action `output` which allows the value of the `forkUrl` string to be accessed by subsequent steps in a GitHub Workflow.
+
+### Changed
+
+- Upgraded action runner config to use node v16 (support for v12 is [being deprecated](https://github.blog/changelog/2022-09-22-github-actions-all-actions-will-begin-running-on-node16-instead-of-node12/)).
+
 ## [0.0.5] - 2022-09-07
 
 ### Added
