@@ -23,11 +23,11 @@ inputs:
   checkUser:
     description: 'Enforce organization membership for GitHub user'
     required: false
-    default: 'false'
+    default: false
   promoteUser:
     description: 'Promote GitHub user to admin of the forked repo'
     required: false
-    default: 'false'
+    default: false
   licenseAllowlist:
     description: 'List of allowed licenses for repository being forked'
     required: false
