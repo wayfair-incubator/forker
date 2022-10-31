@@ -1,9 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": "Renovate configuration recommended by the Wayfair OSPO",
-  "labels": [
-    "renovate/{{depName}}"
-  ],
+  "description": "Renovate configuration for bigpanda rs repository",
   "extends": [
     "config:base",
     ":dependencyDashboard",
@@ -13,31 +10,21 @@
     "before 3am every weekday"
   ],
   "enabledManagers": [
-    "github-actions",
-    "npm"
+    "github-actions"
   ],
+  "cargo": {
+    "packageRules": [
+      {
+        "description": "Wait 3 days before opening a PR for new major version updates",
+        "matchUpdateTypes": ["major"]
+      },
+      {
+        "description": "Automerge non-major version updates (assuming the CI pipelines pass)",
+        "matchUpdateTypes": ["patch", "minor"]
+      }
+    ]
+  },
   "packageRules": [
-    {
-      "matchPackageNames": ["jest", "ts-jest", "@types/jest"],
-      "matchPackagePrefixes": ["jest-"],
-      "groupName": "Jest",
-      "allowedVersions": "28.x"
-    },
-    {
-      "matchPackageNames": ["eslint"],
-      "matchPackagePrefixes": ["eslint-", "@typescript-eslint/"],
-      "groupName": "ESLint"
-    },
-    {
-      "matchPackageNames": ["@types/node"],
-      "groupName": "Node",
-      "allowedVersions": "17.x"
-    },
-    {
-      "matchPackageNames": ["typescript"],
-      "groupName": "TypeScript",
-      "allowedVersions": "4.x"
-    },
     {
       "matchManagers": ["github-actions"],
       "groupName": "GitHub Actions"
