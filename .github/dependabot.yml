@@ -12,8 +12,5 @@ updates:
     schedule:
       interval: "weekly"
     target-branch: "main"
-    commit-message:
-      prefix: "chore"
-      include: "scope"
     labels:
       - "Type: Maintenance"
