@@ -7,7 +7,7 @@ jobs:
   lint-markdown:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: ⬇️ lint markdown files
         uses: avto-dev/markdown-lint@v1
         with:
@@ -16,9 +16,9 @@ jobs:
   lint-renovate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: 🧼 lint renovate config
-        uses: suzuki-shunsuke/github-action-renovate-config-validator@v0.1.2
+        uses: suzuki-shunsuke/github-action-renovate-config-validator@v0.1.3
         with:
           config_file_path: renovate.json
   build-fork:
@@ -33,6 +33,6 @@ jobs:
       INPUT_PROMOTEUSER: false
       INPUT_LICENSEALLOWLIST: "0bsd\napache-2.0\nbsd-2-clause\nbsd-3-clause\nmit"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: "🛠 build + test npm"
         run: npm run fork
