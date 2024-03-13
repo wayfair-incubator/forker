@@ -83,7 +83,7 @@ A newline-delimited (`"\n"`) string representing a list of allowed [license keys
 
 ### `targetInstanceUrl` (optional, string)
 
-This parameter can be used to target a GitHub Enterprise Server instance instead of https://github.com. 
+This parameter can be used to target a GitHub Enterprise Server instance instead of <https://github.com>.
 
 **Example:** `https://my-private.github-server.com`
 
