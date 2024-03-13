@@ -24,6 +24,6 @@ updates:
             - "eslint*"
             - "jest/*"
             - "typescript"
-            - "*"       # A wildcard that matches all dependencies in the package
+            - "*"
     schedule:
       interval: "weekly"
