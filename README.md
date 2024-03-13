@@ -81,6 +81,12 @@ A newline-delimited (`"\n"`) string representing a list of allowed [license keys
 
 **Example:** `"0bsd\napache-2.0\nmit"`
 
+### `targetInstanceUrl` (optional, string)
+
+This parameter can be used to target a GitHub Enterprise Server instance instead of <https://github.com>.
+
+**Example:** `https://my-private.github-server.com`
+
 ## Outputs
 
 ### `forkUrl` (string)
@@ -134,6 +140,20 @@ with:
   checkUser: true
   promoteUser: true
   licenseAllowlist: "0bsd\napache-2.0\nmit"
+```
+
+### Target a GitHub Enterprise Server
+
+Create a fork in your own GitHub Enterprise Server:
+
+```yaml
+uses: wayfair-incubator/forker@a694606ff02c8ba2654865adeb7a6d2053b34afa
+with:
+  token: ${{ secrets.ACCESS_TOKEN }}
+  repo: tremor-runtime
+  owner: tremor-rs
+  user: lelia
+  targetInstanceUrl: https://my-private.github-server.com
 ```
 
 ---
