@@ -143,6 +143,7 @@ with:
 ```
 
 ### Target a GitHub Enterprise Server
+
 Create a fork in your own GitHub Enterprise Server:
 
 ```yaml
