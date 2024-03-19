@@ -6,17 +6,17 @@ import {HttpsProxyAgent} from 'https-proxy-agent'
 const token: string = core.getInput('token', {required: true})
 const targetInstanceUrl: string = core.getInput('targetInstanceUrl')
 const httpsProxy: string = process.env.HTTPS_PROXY as string
-const octokit = targetInstanceUrl ? new Octokit({
-  auth: token,
-  baseUrl: targetInstanceUrl,
-    request: {
-      agent: httpsProxy
-        ? new HttpsProxyAgent(httpsProxy)
-        : undefined,
-    },
-}) : new Octokit({
-  auth: token,
-})
+const octokit = targetInstanceUrl
+  ? new Octokit({
+      auth: token,
+      baseUrl: targetInstanceUrl,
+      request: {
+        agent: httpsProxy ? new HttpsProxyAgent(httpsProxy) : undefined
+      }
+    })
+  : new Octokit({
+      auth: token
+    })
 
 export async function changeUserPermissions(
   org: string,
@@ -97,7 +97,9 @@ export async function forkRepo(
         }`
       )
     } else {
-      core.info(`Received an error code: ${err.status} ${(err as Error).message}`)
+      core.info(
+        `Received an error code: ${err.status} ${(err as Error).message}`
+      )
       core.setFailed(`🚨 Failed to create fork of repository: ${repo}`)
     }
   }
